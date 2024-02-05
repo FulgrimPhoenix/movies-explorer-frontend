@@ -15,7 +15,7 @@
 }
 
 .profile__form {
-  margin: 120px auto 50px;
+  margin: 125px auto 50px;
   width: 410px;
   display: flex;
   flex-direction: column;
@@ -75,7 +75,7 @@
 }
 
 .profile__edit-button {
-  margin: 220px auto 0;
+  margin: 200px auto 0;
   background: none;
   border: none;
   width: 100%;

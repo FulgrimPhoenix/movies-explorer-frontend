@@ -4,7 +4,7 @@
 
 .section-title {
   margin: 0 auto;
-  padding: 110px 0 22px;
+  padding: 110px 0 24px;
   max-width: 1140px;
   color: #000;
   font-family: Inter;
@@ -55,7 +55,7 @@
   color: #fff;
   list-style-type: none;
   padding: 0;
-  margin: 24px 20px;
+  margin: 25px 20px;
   color: #fff;
   font-family: Inter;
   font-size: 13px;
