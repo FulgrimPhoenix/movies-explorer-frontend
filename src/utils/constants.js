@@ -5,7 +5,7 @@ import logo from "../images/logo.svg";
 import accauntImgPink from "../images/headerLogo.svg";
 import accauntImg from "../images/headerLogoForAll.svg";
 import navBarIcon from "../images/menuNavBarIcon.svg";
-import exitButton from "../images/exit.svg"
+import exitButton from "../images/exit.svg";
 //HQ picture
 import slova_o_disaineHQ from "../images/movieList/33_slova_o_disaine.png";
 import kinoalmanaxHQ from "../images/movieList/Kinoalmanax.png";
@@ -42,10 +42,10 @@ export const projectConstants = {
   },
   AboutMeData: {
     sectionTitle: "Студент",
-    name: "Виталий",
-    specialization: "Фронтенд-разработчик, 30 лет",
+    name: "Илья",
+    specialization: "Фронтенд-разработчик, 25 лет",
     aboutMe:
-      "Я родился и живу в Саратове, закончил факультет экономики СГУ. У меня есть жена и дочь. Я люблю слушать музыку, а ещё увлекаюсь бегом. Недавно начал кодить. С 2015 года работал в компании «СКБ Контур». После того, как прошёл курс по веб-разработке, начал заниматься фриланс-заказами и ушёл с постоянной работы.",
+      "Я родился в Ивантеевке, но сейчас живу в Мытищах. Закончил аэрокосмический факультет МАИ на инженера-конструктора. Я большой любитель настольных (особенно Warhammer 40000 и D&D) и компьютерных игр. Всю жизнь я чувствовал предрасположенность к IT разработке, но лишь в 2022 году решил заняться этим серьезно и поступил на курс Веб-разработчика. После выпуска планирую немного поработать во фрилансе, а как поднаберусь опыта - постараюсь устроить в крупную компанию на постоянную основу (Оособенно сильно хочу пополнить ряды разработчиков Яндекс).",
     photo: myPhoto,
   },
   portfolioData: {
@@ -147,11 +147,11 @@ export const projectConstants = {
   },
   popupData: {
     exitButton: exitButton,
-    accauntImg: accauntImg
+    accauntImg: accauntImg,
   },
   notFoundPageData: {
     title: "404",
     subTitle: "Страница не найдена",
-    buttonText: "Назад"
-  }
+    buttonText: "Назад",
+  },
 };

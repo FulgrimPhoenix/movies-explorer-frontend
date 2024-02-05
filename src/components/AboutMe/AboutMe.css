@@ -47,6 +47,12 @@
   /* 157.143% */
 }
 
+.about-me__photo{
+  width: 270px;
+  height: 327px;
+  border-radius: 10px;
+}
+
 .about-me__myRef {
   display: block;
   margin: 99px 0 0;
