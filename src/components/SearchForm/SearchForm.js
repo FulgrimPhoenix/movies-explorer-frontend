@@ -13,9 +13,9 @@ export function SearchForm({ formSearchUtils }) {
             src={formSearchUtils.search_icon}
             alt={formSearchUtils.alt_search_icon}
           />
-          <input className="search__input" placeholder="Фильмы" />
+          <input className="search__input" placeholder="Фильмы" required />
           <button className="search__button" /*onSubmit={formUtils.onSubmit}*/>
-            <p className="search__button-text">{formSearchUtils.button_text}</p>
+            {formSearchUtils.button_text}
           </button>
           <div className="search__container">
             <input
@@ -41,9 +41,7 @@ export function SearchForm({ formSearchUtils }) {
             <button
               className="search__button" /*onSubmit={formUtils.onSubmit}*/
             >
-              <p className="search__button-text">
-                {formSearchUtils.button_text}
-              </p>
+              {formSearchUtils.button_text}
             </button>
           </form>
           <div className="search__container">

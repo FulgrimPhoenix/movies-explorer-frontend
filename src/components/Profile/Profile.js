@@ -15,7 +15,7 @@ export function Profile({ profileData, logOut }) {
   }
 
   return (
-    <main className="profile">
+    <section className="profile">
       <h1 className="profile__title">{profileData.title(profileName)}</h1>
       <form className="profile__form" onSubmit={(e) => e.preventDefault()}>
         <div className="profile__input-cell">
@@ -71,6 +71,6 @@ export function Profile({ profileData, logOut }) {
           </>
         )}
       </form>
-    </main>
+    </section>
   );
 }

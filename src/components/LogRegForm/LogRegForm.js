@@ -1,15 +1,14 @@
+import { Link } from "react-router-dom";
 import "./LogRegForm.css";
 
-export function LogRegForm( {children, formData }) {
+export function LogRegForm({ children, formData }) {
   return (
     <form className="log-reg-form" noValidate>
-      <picture className="log-reg-form__logo">
-        <source srcSet={formData.logo} media="(min-width: 600px)" type="image/svg" />
-        <img
-          src={formData.legacyLogo}
-          alt="logo"
-        />
-      </picture>
+      <Link className="log-reg-form__logo" to="/">
+        <picture>
+          <img src={formData.logo} alt="Логотип" />
+        </picture>
+      </Link>
       <h1 className="log-reg-form__title">{formData.title}</h1>
       {children}
       <button className="log-reg-form__button">{formData.buttonText}</button>

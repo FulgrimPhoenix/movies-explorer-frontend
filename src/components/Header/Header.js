@@ -21,29 +21,30 @@ export function Header({ togglePopup, headerData, isLoggedIn }) {
     <header className={`header ${isMainPage ? "header_main-page-color" : ""}`}>
       <div className="header__container">
         <Link className="header__logo" to="/">
-          <img src={headerData.logo} alt="logo" />
+          <img src={headerData.logo} alt="логотип" />
         </Link>
         {windowWidth < 769 ? (
-          isLoggedIn ?
-          <button onClick={togglePopup} className="header__menu-switcher">
-            <img src={headerData.navBarIcon} alt="navIcon"/>
-          </button>
-          :
-          <ul className="header__menu-list">
-            <li className="header__menu-item">
-              <Link className="header__link" to="signup">
-                Регистрация
-              </Link>
-            </li>
-            <li className="header__menu-item header__menu-item_dark-theme">
-              <Link
-                className="header__link header__link_dark-theme"
-                to="signin"
-              >
-                Войти
-              </Link>
-            </li>
-          </ul>
+          isLoggedIn ? (
+            <button onClick={togglePopup} className="header__menu-switcher">
+              <img src={headerData.navBarIcon} alt="Иконка навигации" />
+            </button>
+          ) : (
+            <ul className="header__menu-list">
+              <li className="header__menu-item">
+                <Link className="header__link" to="signup">
+                  Регистрация
+                </Link>
+              </li>
+              <li className="header__menu-item header__menu-item_dark-theme">
+                <Link
+                  className="header__link header__link_dark-theme"
+                  to="signin"
+                >
+                  Войти
+                </Link>
+              </li>
+            </ul>
+          )
         ) : (
           <div className="header__menu">
             <nav>
@@ -53,7 +54,7 @@ export function Header({ togglePopup, headerData, isLoggedIn }) {
                     <li className="header__menu-nav-item">
                       <NavLink
                         className={({ isActive }) =>
-                          setActive({ isActive }, "header__nav-link")
+                          setActive({ isActive }, "header__menu-nav-link")
                         }
                         to="/movies"
                       >
@@ -63,7 +64,7 @@ export function Header({ togglePopup, headerData, isLoggedIn }) {
                     <li className="header__menu-nav-item">
                       <NavLink
                         className={({ isActive }) =>
-                          setActive({ isActive }, "header__nav-link")
+                          setActive({ isActive }, "header__menu-nav-link")
                         }
                         to="saved-movies"
                       >
@@ -73,7 +74,7 @@ export function Header({ togglePopup, headerData, isLoggedIn }) {
                     <li className="header__profile-cell">
                       <NavLink
                         className={({ isActive }) =>
-                          setActive({ isActive }, "header__accaunt-nav-link")
+                          setActive({ isActive }, "header__profile-cell-link")
                         }
                         to="profile"
                       >
@@ -85,22 +86,13 @@ export function Header({ togglePopup, headerData, isLoggedIn }) {
                         }`}
                       >
                         <picture className="header__accaunt-img">
-                          <source
-                            srcSet={
-                              isMainPage
-                                ? headerData.accauntImgPink
-                                : headerData.accauntImg
-                            }
-                            media="(min-width: 600px)"
-                            type="image/svg"
-                          />
                           <img
                             src={
                               isMainPage
-                                ? headerData.legacyAccauntImgPink
+                                ? headerData.accauntImgPink
                                 : headerData.legacyAccauntImg
                             }
-                            alt="logo"
+                            alt="логотип"
                           />
                         </picture>
                       </div>

@@ -4,7 +4,7 @@ import "./MenuLink.css";
 export function MenuLink({ onClick, styleMode, to, title }) {
   const setActive = ({ isActive }, baseStyle) =>
     isActive
-      ? `${baseStyle} navigation__link navigation__link_active`
+      ? `${baseStyle} link link_active`
       : `${baseStyle}`;
   return (
     <NavLink

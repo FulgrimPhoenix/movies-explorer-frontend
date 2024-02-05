@@ -31,7 +31,7 @@ function App() {
 
   function logOut(){
     setLogStatus(false);
-    navigate("/", { replace: true });
+    navigate("/signin", { replace: true });
   }
 
   function goBack(){

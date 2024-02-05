@@ -2,11 +2,8 @@ import myPhoto from "../images/myPhoto.jpg";
 import searchIcon from "../images/search-icon.svg";
 import savedImg from "../images/savedImg.svg";
 import logo from "../images/logo.svg";
-import legacyLogo from "../images/logo.png";
-import headerAccauntImgPink from "../images/headerLogo.png";
-import headerLegacyAccauntImgPink from "../images/headerLogo.png";
-import headerAccauntImg from "../images/headerLogoForAll.svg";
-import headerLegacyAccauntImg from "../images/headerLogoForAll.png";
+import accauntImgPink from "../images/headerLogo.svg";
+import accauntImg from "../images/headerLogoForAll.svg";
 import navBarIcon from "../images/menuNavBarIcon.svg";
 import exitButton from "../images/exit.svg"
 //HQ picture
@@ -20,12 +17,9 @@ import v_pogone_za_BenksiLQ from "../images/movieList/V_pogone_za_Benksi.jpg";
 
 export const projectConstants = {
   headerData: {
-    accauntImgPink: headerLegacyAccauntImgPink,
-    legacyAccauntImgPink: headerLegacyAccauntImgPink,
-    accauntImg: headerLegacyAccauntImg,
-    legacyAccauntImg: headerLegacyAccauntImg,
+    accauntImgPink: accauntImgPink,
+    accauntImg: accauntImg,
     logo: logo,
-    legacyLogo: headerLegacyAccauntImgPink,
     navBarIcon: navBarIcon,
   },
   aboutProjectData: [
@@ -82,7 +76,7 @@ export const projectConstants = {
   },
   formSearchUtils: {
     search_icon: searchIcon,
-    alt_search_icon: "search icon",
+    alt_search_icon: "иконка поиска",
     button_text: "Найти",
     checkbox_title: "Короткометражки",
   },
@@ -132,7 +126,6 @@ export const projectConstants = {
   },
   registerFormData: {
     logo: logo,
-    legacyLogo: legacyLogo,
     title: "Добро пожаловать!",
     buttonText: "Зарегистрироваться",
     redirectLine: "Уже зарегестрированы?",
@@ -141,8 +134,7 @@ export const projectConstants = {
   },
   loginFormData: {
     logo: logo,
-    legacyLogo: legacyLogo,
-    title: "Рады видеть",
+    title: "Рады видеть!",
     buttonText: "Войти",
     redirectLine: "Ещё не зарегестрированы?",
     redirectLink: "/signup",
@@ -155,7 +147,7 @@ export const projectConstants = {
   },
   popupData: {
     exitButton: exitButton,
-    accauntImg: headerLegacyAccauntImg
+    accauntImg: accauntImg
   },
   notFoundPageData: {
     title: "404",

@@ -3,7 +3,7 @@ import "./Techs.css";
 export function Techs({ techsList, techsData }) {
   return (
     <section id="techs" className="techs">
-      <h3 className="section-title">Технологии</h3>
+      <h2 className="section-title">Технологии</h2>
       <div className="techs__container">
         <h2 className="techs__title">
           {techsData.title}

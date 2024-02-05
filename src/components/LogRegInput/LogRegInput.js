@@ -9,6 +9,7 @@ export function LogRegInput({
   onChange,
   value,
   name,
+  placeholder
 }) {
   const [isValid, setIsValid] = React.useState(true);
   const [errorMessage, setErrorMessage] = React.useState("");
@@ -30,6 +31,7 @@ export function LogRegInput({
         type={inputType}
         minLength={minLength}
         maxLength={maxLength}
+        placeholder={placeholder}
       />
       <span
         className={`log-reg-input__error-message ${

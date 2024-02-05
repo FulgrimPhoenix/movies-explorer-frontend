@@ -3,7 +3,7 @@ import "./Footer.css";
 export function Footer({ footerData }) {
   return (
     <footer className="footer">
-      <div className="footer__main-info">{footerData.mainInfo}</div>
+      <h3 className="footer__main-info">{footerData.mainInfo}</h3>
       <div className="footer__container">
         <p className="footer__signature">{footerData.signature}</p>
         <nav className="footer__links">

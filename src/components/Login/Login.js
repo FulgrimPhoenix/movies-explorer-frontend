@@ -13,7 +13,7 @@ export function Login({ loginFormData }) {
 
   return (
     <main className="login">
-      <LogRegForm formData={projectConstants.registerFormData}>
+      <LogRegForm formData={projectConstants.loginFormData}>
         <LogRegInput
           name="email"
           value={values["email"]}
@@ -22,6 +22,7 @@ export function Login({ loginFormData }) {
           inputType="email"
           minLength={10}
           maxLength={30}
+          placeholder={"test@mail.ru"}
         />
         <LogRegInput
           name="password"
@@ -31,6 +32,7 @@ export function Login({ loginFormData }) {
           inputType="password"
           minLength={8}
           maxLength={16}
+          placeholder={"Strong8Password!"}
         />
       </LogRegForm>
       <p className="login__redirect-line">

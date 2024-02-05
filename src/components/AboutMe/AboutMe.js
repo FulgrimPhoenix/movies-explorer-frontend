@@ -3,7 +3,7 @@ import "./AboutMe.css";
 export function AboutMe({ AboutMeData }) {
   return (
     <section id="about-me" className="about-me">
-      <h3 className="section-title">{AboutMeData.sectionTitle}</h3>
+      <h2 className="section-title">{AboutMeData.sectionTitle}</h2>
       <div className="about-me__container">
         <div className="about-me__info">
           <h2 className="about-me__title">{AboutMeData.name}</h2>
@@ -21,7 +21,7 @@ export function AboutMe({ AboutMeData }) {
         <img
           className="about-me__photo"
           src={AboutMeData.photo}
-          alt="myPhoto"
+          alt="Моя фотография"
         />
       </div>
     </section>

@@ -13,16 +13,11 @@ export function MovieCard({ cardData, cellData }) {
             <img
               className="card__savedStatus"
               src={cellData.savedImg}
-              alt="savedStatus"
+              alt="кнопка 'сохранено'"
             />
           )}
         </div>
         <picture>
-          <source
-            srcSet={cardData.imgSrcHQ}
-            media="(min-width: 600px)"
-            type="image/png"
-          />
           <img className="card__img" src={cardData.imgSrc} alt={cardData.title} />
         </picture>
       </div>

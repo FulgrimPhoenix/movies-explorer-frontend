@@ -17,6 +17,7 @@
 }
 
 .about-project__item {
+
   max-width: 550px;
 }
 
@@ -25,7 +26,7 @@
   padding: 0;
   margin: 0;
   color: #000;
-  font-family: Inter;
+  font-family: 'Inter', Arial, sans-serif;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
@@ -36,7 +37,7 @@
 .about-project__item-description {
   margin: 26px 0 0;
   color: #000;
-  font-family: Inter;
+  font-family: 'Inter', Arial, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -64,7 +65,7 @@
 .about-project__timeline-text {
   margin: 9px 0;
   color: #000;
-  font-family: Inter;
+  font-family: 'Inter', Arial, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -79,7 +80,7 @@
   margin: 0;
   color: #a0a0a0;
   text-align: center;
-  font-family: Inter;
+  font-family: 'Inter', Arial, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -121,6 +122,7 @@
   }
 
   .about-project__item {
+    margin: 0 auto;
     margin-top: 56px;
   }
 
@@ -145,7 +147,7 @@
   .about-project__timeline-container {
     margin: 60px auto 0;
     padding-bottom: 60px;
-    grid-template-columns: 100px 184px;
+    grid-template-columns: 35% 65%;
     grid-template-rows: 36px 31px;
   }
 

@@ -27,7 +27,7 @@ export function MovieCardList({ cardCellData, movieList }) {
     setCardListLength(cardListLength + 3);
   }
   return (
-    <section className="movie-card-list">
+    <div className="movie-card-list">
       <ul className="movie-card-list__grid">
         {cardList.map((card) => {
           return (
@@ -49,6 +49,6 @@ export function MovieCardList({ cardCellData, movieList }) {
       >
         Ещё
       </button>
-    </section>
+    </div>
   );
 }

@@ -3,14 +3,14 @@ import "./AboutProject.css";
 export function AboutProject({ aboutProjectData }) {
   return (
     <section id="about-project" className="about-project">
-      <h3 className="section-title">О проекте</h3>
+      <h2 className="section-title">О проекте</h2>
       <div className="about-project__container">
         
         <ul className="about-project__items">
           {aboutProjectData.map((aboutItem) => {
             return (
               <li key={aboutItem.title} className="about-project__item">
-                <h4 className="about-project__item-title">{aboutItem.title}</h4>
+                <h3 className="about-project__item-title">{aboutItem.title}</h3>
                 <p className="about-project__item-description">
                   {aboutItem.description}
                 </p>

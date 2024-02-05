@@ -24,6 +24,7 @@ export function Register({ registerFormData }) {
           inputType="text"
           minLength={2}
           maxLength={30}
+          placeholder={"Илья"}
         />
         <LogRegInput
           name="email"
@@ -33,6 +34,7 @@ export function Register({ registerFormData }) {
           inputType="email"
           minLength={10}
           maxLength={30}
+          placeholder={"test@mail.ru"}
         />
         <LogRegInput
           name="password"
@@ -42,6 +44,7 @@ export function Register({ registerFormData }) {
           inputType="password"
           minLength={8}
           maxLength={16}
+          placeholder={"Strong8Password!"}
         />
       </LogRegForm>
       <p className="register__redirect-line">

@@ -9,7 +9,7 @@
 .log-reg-input__title {
   margin: 0;
   color: #a0a0a0;
-  font-family: Inter;
+  font-family: 'Inter', Arial, sans-serif;
   font-size: 10px;
   font-style: normal;
   font-weight: 400;
@@ -25,7 +25,7 @@
   box-sizing: border-box;
   padding: 15px;
   color: #000;
-  font-family: Inter;
+  font-family: 'Inter', Arial, sans-serif;
   font-size: 13px;
   font-style: normal;
   font-weight: 400;
@@ -35,12 +35,18 @@
 .log-reg-input__input:focus {
   border: none;
   outline: none;
+  box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 1);
+}
+
+.log-reg-input__input::placeholder {
+  color: rgb(160, 160, 160);
+  font-family: 'Inter', Arial, sans-serif;
 }
 
 .log-reg-input__error-message {
   margin: 10px 0 0;
   color: #ff4062;
-  font-family: Inter;
+  font-family: 'Inter', Arial, sans-serif;
   font-size: 10px;
   font-style: normal;
   font-weight: 400;
@@ -54,8 +60,14 @@
   opacity: 1;
 }
 
-@media screen and (max-width:500px) {
-  .log-reg-input__error-message{
+@media screen and (max-width: 800px) {
+  .log-reg-input__error-message {
+    margin: 2px 0 0;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .log-reg-input__error-message {
     margin: 8px 0 0;
     min-height: 11px;
   }

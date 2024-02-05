@@ -20,6 +20,11 @@
   display: block;
   height: 38px;
   width: 38px;
+  transition: opacity .3s linear;
+}
+
+.header__logo:hover {
+  opacity: .7;
 }
 
 .header__menu-list {
@@ -33,6 +38,12 @@
   padding: 7px 20px;
   border-radius: 3px;
   display: flex;
+  transition: opacity 0.3s linear;
+  cursor: pointer;
+}
+
+.header__menu-item:hover {
+  opacity: .8;
 }
 
 .header__menu-nav-item {
@@ -42,11 +53,11 @@
   height: 30px;
 }
 
-.header__nav-link {
+.header__menu-nav-link {
   margin: auto;
   color: rgb(0, 0, 0);
   text-decoration: none;
-  font-family: Inter;
+  font-family: 'Inter', Arial, sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 18px;
@@ -55,15 +66,15 @@
   transition: opacity 0.3s linear;
 }
 
-.header__nav-link:hover {
+.header__menu-nav-link:hover {
   opacity: 0.7;
 }
 
-.header__accaunt-nav-link {
+.header__profile-cell-link {
   margin: auto 0;
   text-decoration: none;
   color: rgb(0, 0, 0);
-  font-family: Inter;
+  font-family: 'Inter', Arial, sans-serif;
   font-size: 14px;
   font-weight: 500;
   line-height: 16px;
@@ -73,7 +84,7 @@
   transition: opacity 0.3s linear;
 }
 
-.header__accaunt-nav-link:hover {
+.header__profile-cell-link:hover {
   opacity: 0.7;
 }
 
@@ -88,7 +99,7 @@
 .header__menu-link {
   color: #000;
   text-align: right;
-  font-family: Inter;
+  font-family: 'Inter', Arial, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -99,7 +110,7 @@
 .header__link {
   text-decoration: none;
   color: #000;
-  font-family: Inter;
+  font-family: 'Inter', Arial, sans-serif;
   font-size: 12px;
   font-weight: 500;
   line-height: 16px;
@@ -110,10 +121,6 @@
 
 .header__link_dark-theme {
   color: #fff;
-}
-
-.header__link:hover {
-  opacity: 0.7;
 }
 
 .header__profile-cell {
