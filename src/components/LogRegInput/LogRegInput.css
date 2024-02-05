@@ -1,0 +1,62 @@
+.log-reg-input {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 396px;
+  margin: 0;
+}
+
+.log-reg-input__title {
+  margin: 0;
+  color: #a0a0a0;
+  font-family: Inter;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.log-reg-input__input {
+  border: none;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  height: 46px;
+  margin: 10px 0 0;
+  box-sizing: border-box;
+  padding: 15px;
+  color: #000;
+  font-family: Inter;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.log-reg-input__input:focus {
+  border: none;
+  outline: none;
+}
+
+.log-reg-input__error-message {
+  margin: 10px 0 0;
+  color: #ff4062;
+  font-family: Inter;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  opacity: 0;
+  transition: opacity 0.3s linear;
+  min-height: 20px;
+}
+
+.log-reg-input__error-message-active {
+  opacity: 1;
+}
+
+@media screen and (max-width:500px) {
+  .log-reg-input__error-message{
+    margin: 8px 0 0;
+    min-height: 11px;
+  }
+}
