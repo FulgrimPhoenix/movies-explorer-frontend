@@ -5,13 +5,20 @@ import { projectConstants } from "../../utils/constants";
 import "./Register.css";
 import { useForm } from "../../hooks/useForm";
 import { useEffect } from "react";
+import { useValidation } from "../../hooks/useValidation";
 
 export function Register({ registerFormData }) {
   const { values, onChange, setValues } = useForm([]);
+  const {validationValues, onChangee, setvalidationValues} = useValidation({})
 
   useEffect(() => {
-    setValues([]);
+    setValues({});
   }, []);
+
+  function onInputChange(e){
+    onChange(e);
+    onChangee(e)
+  }
 
   return (
     <main className="register">
@@ -19,7 +26,7 @@ export function Register({ registerFormData }) {
         <LogRegInput
           name="name"
           value={values["name"]}
-          onChange={onChange}
+          onChange={onInputChange}
           title="Имя"
           inputType="text"
           minLength={2}
@@ -29,7 +36,7 @@ export function Register({ registerFormData }) {
         <LogRegInput
           name="email"
           value={values["email"]}
-          onChange={onChange}
+          onChange={onInputChange}
           title="email"
           inputType="email"
           minLength={10}
@@ -39,7 +46,7 @@ export function Register({ registerFormData }) {
         <LogRegInput
           name="password"
           value={values["password"]}
-          onChange={onChange}
+          onChange={onInputChange}
           title="Пароль"
           inputType="password"
           minLength={8}

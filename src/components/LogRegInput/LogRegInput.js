@@ -1,5 +1,6 @@
 import React from "react";
 import "./LogRegInput.css";
+import { useValidation } from "../../hooks/useValidation";
 
 export function LogRegInput({
   title,
@@ -13,6 +14,7 @@ export function LogRegInput({
 }) {
   const [isValid, setIsValid] = React.useState(true);
   const [errorMessage, setErrorMessage] = React.useState("");
+
 
   function checkForValid(e) {
     setIsValid(e.target.validity.valid);
