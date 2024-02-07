@@ -1,0 +1,119 @@
+.card {
+  position: relative;
+  list-style: none;
+  width: 100%;
+  height: 100%;
+  max-width: 360px;
+  min-height: 200px;
+  box-sizing: border-box;
+  cursor: pointer;
+  justify-self: center;
+  align-self: center;
+}
+
+.card:hover .card__status-container {
+  opacity: 1;
+  z-index: 2;
+}
+
+.card__img {
+  width: 100%;
+  height: 100%;
+  max-width: 360px;
+  max-height: 200px;
+}
+
+.card__img-container {
+  max-height: 201px;
+}
+
+.card__status-container {
+  transition: 0.4s;
+  z-index: -1;
+  opacity: 0;
+  position: absolute;
+  top: 14px;
+  right: 14px;
+}
+
+.card__save-button {
+  z-index: 3;
+  border: none;
+  background-color: #f9f9f9;
+  height: 21px;
+  padding: 0 7px;
+  border-radius: 30px;
+  color: #000;
+  text-align: center;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 9px; /* 90% */
+  cursor: pointer;
+  transition: opacity linear 0.2s;
+}
+
+.card__save-button:hover {
+  opacity: 0.8;
+}
+
+.card__description {
+  margin: 13px auto 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 14px;
+  letter-spacing: -0.99px;
+}
+
+.card__title {
+  margin: 0;
+}
+
+.card__duration-container {
+  display: flex;
+}
+
+.card__duration-time {
+  margin: auto;
+  padding: 3px 4px;
+  background-color: #f9f9f9;
+  color: #a0a0a0;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 10px; /* 90.909% */
+  letter-spacing: 0.8px;
+}
+
+@media screen and (max-width: 900px) {
+  .card__description{
+    margin-top: 22px;
+    padding: 0;
+  }
+}
+
+
+@media screen and (max-width: 700px) {
+  .card__description {
+    margin: 15px 0 0;
+    padding: 0;
+  }
+
+  .card__img-container{
+    max-height: 168px;
+  }
+
+  .card__title {
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 15px;
+    letter-spacing: 0.4px;
+  }
+  .card__duration-time{
+    padding: 3px 4px;
+    letter-spacing: 1px;
+  }
+}

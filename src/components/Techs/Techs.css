@@ -1,0 +1,125 @@
+.techs {
+  background: #f5f5f5;
+}
+
+.techs__container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 90px 0 100px;
+  box-sizing: content-box;
+}
+
+.techs__title {
+  margin: 0 auto;
+  color: #000;
+  text-align: center;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 58px;
+  /* 116% */
+  letter-spacing: -2px;
+  max-width: 600px;
+}
+
+.techs__description {
+  margin: 26px auto 0;
+  color: #000;
+  text-align: center;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  /* 142.857% */
+  letter-spacing: -0.56px;
+  max-width: 460px;
+}
+
+.techs-grid {
+  max-width: 690px;
+  display: grid;
+  padding: 0;
+  margin: 100px auto 0;
+  grid-template-columns: repeat(7, 1fr);
+  column-gap: 10px;
+  vertical-align: middle;
+}
+
+.techs-grid__cell {
+  list-style: none;
+  padding: 0;
+  max-width: 90px;
+  text-align: center;
+  min-height: 60px;
+  display: flex;
+  border-radius: 10px;
+  background: #e8e8e8;
+}
+
+.techs-grid__cell-content {
+  margin: auto;
+  color: rgb(0, 0, 0);
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+  letter-spacing: -4%;
+  text-align: center;
+}
+
+@media screen and (max-width: 969px) {
+  .techs {
+    padding: 0 50px;
+  }
+
+  .techs__description {
+    margin: 22px auto 0;
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 1px;
+  }
+  .techs__container{
+    padding: 80px 0 88px;
+  }
+  .techs-grid{
+    padding: 0 10px;
+    margin-top: 83px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .techs {
+    padding: 0 18px;
+    background-color: #fff;
+  }
+
+  .techs__title {
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 36px;
+    letter-spacing: -1.3px;
+  }
+
+  .techs__container {
+    padding: 60px 0 70px;
+    background-color: #fff;
+  }
+  .techs__description {
+    margin-top: 24px;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: -0.4px;
+  }
+  .techs-grid{
+    width: 178px;
+    margin: 50px auto 0;
+    gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .techs-grid__cell{
+    min-height: 57px;
+  }
+}

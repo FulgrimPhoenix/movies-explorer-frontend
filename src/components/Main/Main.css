@@ -1,0 +1,129 @@
+.main {
+  width: 100%;
+}
+
+.section-title {
+  margin: 0 auto;
+  padding: 110px 0 24px;
+  max-width: 1140px;
+  color: #000;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.88px;
+  text-align: left;
+  border-bottom: #000 solid 1px;
+}
+
+.intro {
+  background: url("../../images/main-landing-logo.svg") no-repeat;
+  background-size: 320px 320px;
+  background-position: center 82px;
+  background-color: #f3c1f8;
+}
+
+.intro__title {
+  margin: 0 auto;
+  padding: 184px 0 224px;
+  color: #000;
+  text-align: center;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 58px;
+  /* 116% */
+  letter-spacing: -2px;
+  max-width: 730px;
+}
+
+.menu {
+  background-color: #000;
+}
+
+.menu__list {
+  padding: 0;
+  display: flex;
+  min-height: 66px;
+  justify-content: center;
+  margin: 0;
+}
+
+.menu__list-item{
+  list-style-type: none;
+  padding: 0;
+  margin: 24px 20px;
+  transition: opacity .3s linear;
+}
+
+.menu__list-item:hover{
+  opacity:  .7;
+}
+
+.menu__list-link {
+  color: #fff;
+  font-family: 'Inter', Arial, sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  /* 123.077% */
+}
+
+.menu__list-link:first-child {
+  margin-left: 0;
+}
+
+.menu__list-link:last-child {
+  margin-right: 0;
+}
+
+@media screen and (max-width: 769px) {
+  .intro {
+    background-position: center 224px;
+  }
+
+  .intro__title {
+    padding: 326px 0 342px;
+  }
+
+  .section-title {
+    padding: 90px 0 24px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .section-title {
+    padding: 70px 0 28px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+  }
+
+  .intro {
+    background-size: 248px 248px;
+    background-position: center 142px;
+  }
+
+  .intro__title {
+    padding: 207px 0 246px;
+    font-size: 31px;
+    font-weight: 400;
+    line-height: 39px;
+    letter-spacing: -0.7px;
+  }
+
+  .menu__list-item {
+    margin: 24px 12px;
+  }
+
+  .menu__list-link {
+    color: rgb(255, 255, 255);
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 0px;
+  }
+}
