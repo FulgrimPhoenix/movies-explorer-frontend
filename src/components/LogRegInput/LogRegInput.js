@@ -12,14 +12,8 @@ export function LogRegInput({
   name,
   placeholder
 }) {
-  const [isValid, setIsValid] = React.useState(true);
-  const [errorMessage, setErrorMessage] = React.useState("");
-
-
-  function checkForValid(e) {
-    setIsValid(e.target.validity.valid);
-    setErrorMessage(e.target.validationMessage);
-  }
+  
+  const {validationResult, onChangee, setValidationValues} = useValidation({});
 
   return (
     <div className="log-reg-input">
@@ -28,7 +22,7 @@ export function LogRegInput({
         name={name}
         className="log-reg-input__input"
         onChange={onChange}
-        onInput={(e) => checkForValid(e)}
+        onInput={(e) => onChangee(e)}
         value={value||""}
         type={inputType}
         minLength={minLength}
@@ -37,10 +31,10 @@ export function LogRegInput({
       />
       <span
         className={`log-reg-input__error-message ${
-          isValid ? "" : "log-reg-input__error-message-active"
+          validationResult.isValid ? "" : "log-reg-input__error-message-active"
         }`}
       >
-        {errorMessage}
+        {validationResult.errorMessage}
       </span>
     </div>
   );
