@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./LogRegInput.css";
 import { useValidation } from "../../hooks/useValidation";
 
@@ -10,10 +10,16 @@ export function LogRegInput({
   onChange,
   value,
   name,
-  placeholder
+  placeholder,
+  regax,
+  advancedValidation
 }) {
   
-  const {validationResult, onChangee, setValidationValues} = useValidation({});
+  const {validationResult, onChangee, setValidationValues} = useValidation({initialValue: { "isValid": false, "error": "" }, regax: regax,advancedValidation: advancedValidation});
+
+  useEffect(() => {
+    console.log(validationResult);
+  }, [value])
 
   return (
     <div className="log-reg-input">
@@ -34,7 +40,7 @@ export function LogRegInput({
           validationResult.isValid ? "" : "log-reg-input__error-message-active"
         }`}
       >
-        {validationResult.errorMessage}
+        {validationResult.error}
       </span>
     </div>
   );

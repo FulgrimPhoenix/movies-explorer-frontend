@@ -17,7 +17,6 @@ export function Register({ registerFormData }) {
 
   function onInputChange(e){
     onChange(e);
-    onChangee(e)
   }
 
   return (
@@ -32,6 +31,8 @@ export function Register({ registerFormData }) {
           minLength={2}
           maxLength={30}
           placeholder={"Илья"}
+          regax={/[a-zа-я\sё-]/g}
+          advancedValidation={true}
         />
         <LogRegInput
           name="email"
@@ -42,6 +43,8 @@ export function Register({ registerFormData }) {
           minLength={10}
           maxLength={30}
           placeholder={"test@mail.ru"}
+          regax={/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/}
+          advancedValidation={true}
         />
         <LogRegInput
           name="password"
@@ -52,6 +55,8 @@ export function Register({ registerFormData }) {
           minLength={8}
           maxLength={16}
           placeholder={"Strong8Password!"}
+          regax={null}
+          advancedValidation={false}
         />
       </LogRegForm>
       <p className="register__redirect-line">
