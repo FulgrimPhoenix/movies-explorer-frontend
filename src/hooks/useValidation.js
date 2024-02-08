@@ -8,18 +8,25 @@ export const useValidation = ({initialValue, regax, advancedValidation}) => {
   const [validationResult, setValidationResult] = useState(initialValue);
 
   useEffect(() => {
-    setValidationResult({ "isValid": isValid, "error": errorMessage })
+    setValidationResult({ "isValid": isValid, "errorMessage": errorMessage })
       ;
   }, [isValid, errorMessage]);
+// Redesign the logic for email validation and develop a new regExp for email
+  function inputAdvancedValidation(e){
+    const inputValue = e.target.value;
+    if (e.target.name === 'email'){
+      return String(inputValue)
+      .match(regax) ? true : false
+    } else {
+      return !regax.test(String(inputValue))
+    }
+  }
 
   return {
     validationResult,
     onChangee: (e) => {
-      let inputValue = e.target.value;
       if (e.target.validity.valid) {
-        if (!advancedValidation || String(inputValue)
-          .toLowerCase()
-          .match(regax) ? true : false) 
+        if (!advancedValidation || inputAdvancedValidation(e))
           {
             setIsValid(true);
             setErrorMessage("");

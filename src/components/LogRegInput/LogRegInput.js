@@ -11,6 +11,7 @@ export function LogRegInput({
   value,
   name,
   placeholder,
+  validateForm,
   regax,
   advancedValidation
 }) {
@@ -19,6 +20,7 @@ export function LogRegInput({
 
   useEffect(() => {
     console.log(validationResult);
+    validateForm(name, validationResult.isValid)
   }, [value])
 
   return (
@@ -40,7 +42,7 @@ export function LogRegInput({
           validationResult.isValid ? "" : "log-reg-input__error-message-active"
         }`}
       >
-        {validationResult.error}
+        {validationResult.errorMessage}
       </span>
     </div>
   );

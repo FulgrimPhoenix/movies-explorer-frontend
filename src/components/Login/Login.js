@@ -23,6 +23,8 @@ export function Login({ loginFormData }) {
           minLength={10}
           maxLength={30}
           placeholder={"test@mail.ru"}
+          regax={/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i}
+          advancedValidation={true}
         />
         <LogRegInput
           name="password"
@@ -33,6 +35,8 @@ export function Login({ loginFormData }) {
           minLength={8}
           maxLength={16}
           placeholder={"Strong8Password!"}
+          regax={null}
+          advancedValidation={false}
         />
       </LogRegForm>
       <p className="login__redirect-line">
