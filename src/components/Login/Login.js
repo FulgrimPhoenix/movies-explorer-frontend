@@ -4,16 +4,34 @@ import { projectConstants } from "../../utils/constants";
 import { LogRegForm } from "../LogRegForm/LogRegForm";
 import { LogRegInput } from "../LogRegInput/LogRegInput";
 import "./Login.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function Login({ loginFormData }) {
   const { values, onChange, setValues } = useForm({});
+  const [isValid, setIsValid] = useState({ "email": false, "password": false });
+  const [isButtonActive, setIsButtonActive] = useState(false);
 
-  useEffect(() => setValues({}), []);
+  useEffect(() => {
+    setValues({});
+    setIsValid({ "email": false, "password": false });
+    setIsButtonActive(false)
+  }, []);
+
+  useEffect(() => {
+    if(Object.values(isValid).every(item => item)){
+      setIsButtonActive(true)
+    }else{
+      setIsButtonActive(false);
+    }
+  }, [isValid])
+
+  function validateForm(name, value){
+    setIsValid({...isValid, [name]: value})
+  }
 
   return (
     <main className="login">
-      <LogRegForm formData={projectConstants.loginFormData}>
+      <LogRegForm formData={projectConstants.loginFormData} isButtonActive={isButtonActive} redirectLink={'/movies'}>
         <LogRegInput
           name="email"
           value={values["email"]}
@@ -22,8 +40,11 @@ export function Login({ loginFormData }) {
           inputType="email"
           minLength={10}
           maxLength={30}
+          validateForm={validateForm}
           placeholder={"test@mail.ru"}
-          regax={/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i}
+          regax={
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i
+          }
           advancedValidation={true}
         />
         <LogRegInput
@@ -34,6 +55,7 @@ export function Login({ loginFormData }) {
           inputType="password"
           minLength={8}
           maxLength={16}
+          validateForm={validateForm}
           placeholder={"Strong8Password!"}
           regax={null}
           advancedValidation={false}

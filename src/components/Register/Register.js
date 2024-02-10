@@ -5,25 +5,35 @@ import { projectConstants } from "../../utils/constants";
 import "./Register.css";
 import { useForm } from "../../hooks/useForm";
 import { useEffect, useState } from "react";
-import { useValidation } from "../../hooks/useValidation";
+import { useUrlPathName } from "../../hooks/useUrlPathName";
 
 export function Register({ registerFormData }) {
   const { values, onChange, setValues } = useForm([]);
-  const [ isValid, setIsValid ] = useState({});
+  const [ isValid, setIsValid ] = useState({"name":false, "email": false, "password": false });
+  const [isButtonActive, setIsButtonActive] = useState(false);
+  const currentPath = useUrlPathName()
 
   useEffect(() => {
     setValues({});
-    setIsValid({})
+    setIsValid({"name":false, "email": false, "password": false });
+    setIsButtonActive(false)
   }, []);
+
+  useEffect(() => {
+    if(Object.values(isValid).every(item => item)){
+      setIsButtonActive(true)
+    }else{
+      setIsButtonActive(false);
+    }
+  }, [isValid, currentPath])
 
   function validateForm(name, value){
     setIsValid({...isValid, [name]: value})
-    console.log(isValid);
   }
 
   return (
     <main className="register">
-      <LogRegForm formData={projectConstants.registerFormData}>
+      <LogRegForm formData={projectConstants.registerFormData} isButtonActive={isButtonActive} redirectLink={'/movies'}>
         <LogRegInput
           name="name"
           value={values["name"]}

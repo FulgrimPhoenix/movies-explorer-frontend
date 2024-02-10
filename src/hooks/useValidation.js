@@ -1,24 +1,21 @@
 /* eslint-disable default-case */
 import { useEffect, useState } from "react";
 
-export const useValidation = ({initialValue, regax, advancedValidation}) => {
-  const [validationValues, setValidationValues] = useState({});
+export const UseValidation = ({ initialValue, regax, advancedValidation }) => {
   const [isValid, setIsValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [validationResult, setValidationResult] = useState(initialValue);
 
   useEffect(() => {
-    setValidationResult({ "isValid": isValid, "errorMessage": errorMessage })
-      ;
+
   }, [isValid, errorMessage]);
-// Redesign the logic for email validation and develop a new regExp for email
-  function inputAdvancedValidation(e){
+  // Redesign the logic for email validation and develop a new regExp for email
+  function inputAdvancedValidation(e) {
     const inputValue = e.target.value;
-    if (e.target.name === 'email'){
-      return String(inputValue)
-      .match(regax) ? true : false
+    if (e.target.name === "email") {
+      return String(inputValue).match(regax) ? true : false;
     } else {
-      return !regax.test(String(inputValue))
+      return !regax.test(String(inputValue));
     }
   }
 
@@ -26,20 +23,31 @@ export const useValidation = ({initialValue, regax, advancedValidation}) => {
     validationResult,
     onChangee: (e) => {
       if (e.target.validity.valid) {
-        if (!advancedValidation || inputAdvancedValidation(e))
-          {
-            setIsValid(true);
-            setErrorMessage("");
+        if (!advancedValidation || inputAdvancedValidation(e)) {
+          setIsValid(true);
+          setErrorMessage("");
+          setValidationResult({ isValid: true, errorMessage: "" });
+          return
         } else {
           setIsValid(false);
           setErrorMessage("Поле заполнено не верно");
+          setValidationResult({
+            isValid: false,
+            errorMessage: "Поле заполнено не верно",
+          });
+          return
         }
       } else {
         setIsValid(e.target.validity.valid);
         setErrorMessage(e.target.validationMessage);
+        setValidationResult({
+          isValid: e.target.validity.valid,
+          errorMessage: e.target.validationMessage,
+        });
+        return
       }
     },
-    setValidationValues,
+    isValid,
+    setIsValid
   };
 };
-

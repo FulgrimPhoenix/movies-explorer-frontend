@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./LogRegInput.css";
-import { useValidation } from "../../hooks/useValidation";
+import { UseValidation } from "../../hooks/UseValidation";
 
 export function LogRegInput({
   title,
@@ -13,15 +13,22 @@ export function LogRegInput({
   placeholder,
   validateForm,
   regax,
-  advancedValidation
+  advancedValidation,
 }) {
-  
-  const {validationResult, onChangee, setValidationValues} = useValidation({initialValue: { "isValid": false, "error": "" }, regax: regax,advancedValidation: advancedValidation});
+  const { validationResult, onChangee, isValid, setIsValid } = UseValidation({
+    initialValue: { isValid: false, error: "" },
+    regax: regax,
+    advancedValidation: advancedValidation,
+  });
 
   useEffect(() => {
-    console.log(validationResult);
-    validateForm(name, validationResult.isValid)
-  }, [value])
+    validateForm(name, isValid);
+  }, [isValid]);
+
+  function onInputChange(e) {
+    onChange(e);
+    onChangee(e);
+  }
 
   return (
     <div className="log-reg-input">
@@ -29,13 +36,14 @@ export function LogRegInput({
       <input
         name={name}
         className="log-reg-input__input"
-        onChange={onChange}
-        onInput={(e) => onChangee(e)}
-        value={value||""}
+        onChange={(e) => onInputChange(e)}
+        // onInput={(e) => onInputChange(e)}
+        value={value || ""}
         type={inputType}
         minLength={minLength}
         maxLength={maxLength}
         placeholder={placeholder}
+        autoComplete="new-password"
       />
       <span
         className={`log-reg-input__error-message ${

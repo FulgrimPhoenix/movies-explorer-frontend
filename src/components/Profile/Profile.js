@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useForm } from "../../hooks/useForm";
 import "./Profile.css";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
+import { UseValidation } from "../../hooks/UseValidation";
 
 export function Profile({ profileData, logOut }) {
   const { profileName, profileEmail } = useContext(CurrentUserContext);
@@ -9,6 +10,14 @@ export function Profile({ profileData, logOut }) {
   const [isEditMode, setMode] = useState(false);
 
   useEffect(() => setValues({name: profileName, email: profileEmail}), []);
+
+  function checkInput(e, regax, advancedValidation){
+    const { validationResult, onChangee, isValid } = UseValidation({
+      initialValue: { isValid: false, error: "" },
+      regax: regax,
+      advancedValidation: advancedValidation,
+    })
+  }
 
   function handleModeSubmit(field) {
     setMode(!isEditMode);

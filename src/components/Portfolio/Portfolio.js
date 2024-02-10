@@ -7,9 +7,8 @@ export function Portfolio({ portfolioData }) {
       <ul className="portfolio__list">
         {portfolioData.projects.map((project) => {
           return (
-            <li className="portfolio__list-item">
+            <li key={project.title} className="portfolio__list-item">
               <a
-                key={project.title}
                 href={project.link}
                 target="blank"
                 rel="noreferrer"
