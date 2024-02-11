@@ -1,37 +1,59 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "../../hooks/useForm";
 import { projectConstants } from "../../utils/constants";
 import { LogRegForm } from "../LogRegForm/LogRegForm";
 import { LogRegInput } from "../LogRegInput/LogRegInput";
 import "./Login.css";
 import { useEffect, useState } from "react";
+import { api } from "../../utils/Api";
 
 export function Login({ loginFormData }) {
   const { values, onChange, setValues } = useForm({});
-  const [isValid, setIsValid] = useState({ "email": false, "password": false });
+  const [isValid, setIsValid] = useState({ email: false, password: false });
   const [isButtonActive, setIsButtonActive] = useState(false);
+  const [serverError, setServerError] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     setValues({});
-    setIsValid({ "email": false, "password": false });
-    setIsButtonActive(false)
+    setIsValid({ email: false, password: false });
+    setIsButtonActive(false);
   }, []);
 
   useEffect(() => {
-    if(Object.values(isValid).every(item => item)){
-      setIsButtonActive(true)
-    }else{
+    if (Object.values(isValid).every((item) => item)) {
+      setIsButtonActive(true);
+    } else {
       setIsButtonActive(false);
     }
-  }, [isValid])
+  }, [isValid]);
 
-  function validateForm(name, value){
-    setIsValid({...isValid, [name]: value})
+  function validateForm(name, value) {
+    setIsValid({ ...isValid, [name]: value });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    api
+      .signin(values)
+      .then((res) => {
+        navigate("/", { replace: true });
+      })
+      .catch((err) => {
+        err.status === 409
+          ? setServerError("Пользователь уже существует")
+          : setServerError("Произошла ошибка");
+      });
   }
 
   return (
     <main className="login">
-      <LogRegForm formData={projectConstants.loginFormData} isButtonActive={isButtonActive} redirectLink={'/movies'}>
+      <LogRegForm
+        formData={projectConstants.loginFormData}
+        isButtonActive={isButtonActive}
+        redirectLink={"/movies"}
+        onSubmit={handleSubmit}
+      >
         <LogRegInput
           name="email"
           value={values["email"]}

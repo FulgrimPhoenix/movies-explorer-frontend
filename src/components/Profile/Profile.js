@@ -34,7 +34,7 @@ export function Profile({ profileData, logOut }) {
     } else {
       setIsButtonActive(false);
     }
-  }, [isValid, values]);
+  }, [isValid, Object.values(values)]);
 
   function handleModeSubmit(field) {
     setMode(!isEditMode);

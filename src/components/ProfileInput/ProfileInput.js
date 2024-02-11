@@ -13,7 +13,7 @@ export function ProfileInput({
   advancedValidation,
   setIsButtonActive,
 }) {
-  const { validationResult, onChangee, isValid, setIsValid } = UseValidation({
+  const { onChangee, isValid } = UseValidation({
     initialValue: { isValid: false, error: "" },
     regax: regax,
     advancedValidation: advancedValidation,

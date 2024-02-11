@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LogRegForm } from "../LogRegForm/LogRegForm";
 import { LogRegInput } from "../LogRegInput/LogRegInput";
 import { projectConstants } from "../../utils/constants";
@@ -6,34 +6,61 @@ import "./Register.css";
 import { useForm } from "../../hooks/useForm";
 import { useEffect, useState } from "react";
 import { useUrlPathName } from "../../hooks/useUrlPathName";
+import { api } from "../../utils/Api";
 
 export function Register({ registerFormData }) {
   const { values, onChange, setValues } = useForm([]);
-  const [ isValid, setIsValid ] = useState({"name":false, "email": false, "password": false });
+  const [isValid, setIsValid] = useState({
+    name: false,
+    email: false,
+    password: false,
+  });
   const [isButtonActive, setIsButtonActive] = useState(false);
-  const currentPath = useUrlPathName()
+  const [serverError, setServerError] = useState("");
+  const currentPath = useUrlPathName();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setValues({});
-    setIsValid({"name":false, "email": false, "password": false });
-    setIsButtonActive(false)
+    setIsValid({ name: false, email: false, password: false });
+    setIsButtonActive(false);
   }, []);
 
   useEffect(() => {
-    if(Object.values(isValid).every(item => item)){
-      setIsButtonActive(true)
-    }else{
+    if (Object.values(isValid).every((item) => item)) {
+      setIsButtonActive(true);
+    } else {
       setIsButtonActive(false);
     }
-  }, [isValid, currentPath])
+  }, [isValid, currentPath]);
 
-  function validateForm(name, value){
-    setIsValid({...isValid, [name]: value})
+  function validateForm(name, value) {
+    setIsValid({ ...isValid, [name]: value });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    api
+      .signup(values)
+      .then((res) => {
+        navigate("/", { replace: true });
+      })
+      .catch((err) => {
+        err.status === 409 ?
+        setServerError("Пользователь уже существует")
+        :
+        setServerError("Произошла ошибка")
+      });
   }
 
   return (
     <main className="register">
-      <LogRegForm formData={projectConstants.registerFormData} isButtonActive={isButtonActive} redirectLink={'/movies'}>
+      <LogRegForm
+        formData={projectConstants.registerFormData}
+        isButtonActive={isButtonActive}
+        redirectLink={"/movies"}
+        onSubmit={handleSubmit}
+      >
         <LogRegInput
           name="name"
           value={values["name"]}
@@ -57,7 +84,9 @@ export function Register({ registerFormData }) {
           maxLength={30}
           validateForm={validateForm}
           placeholder={"test@mail.ru"}
-          regax={/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i}
+          regax={
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i
+          }
           advancedValidation={true}
         />
         <LogRegInput

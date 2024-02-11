@@ -7,21 +7,36 @@ class Api {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject(`Ошибка: ${res.status}`);
+    return Promise.reject(res.status);
   }
 
   _request(url, options) {
     return fetch(url, options).then(this._checkResponse);
   }
 
-  signup(name, email, password) {
+  signup({name = "", email = "", password = ""}) {
     return this._request(this._url + "signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify({
         name: name,
+        email: email,
+        password: password,
+      }),
+    });
+  }
+
+  signin({email = "", password = ""}) {
+    return this._request(this._url + "signin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
         email: email,
         password: password,
       }),

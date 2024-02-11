@@ -7,17 +7,14 @@ export function LogRegForm({
   formData,
   isButtonActive,
   redirectLink,
+  onSubmit
 }) {
-  const navigate = useNavigate();
 
   function onClick(e) {
     e.preventDefault();
     console.log("меня нажали");
   }
-  function onSubmit(e) {
-    e.preventDefault();
-    navigate(redirectLink, { replace: true });
-  }
+
   return (
     <form onSubmit={onSubmit} className="log-reg-form" noValidate>
       <Link className="log-reg-form__logo" to="/">
