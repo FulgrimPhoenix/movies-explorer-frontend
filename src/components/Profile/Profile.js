@@ -2,70 +2,85 @@ import { useContext, useEffect, useState } from "react";
 import { useForm } from "../../hooks/useForm";
 import "./Profile.css";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
-import { UseValidation } from "../../hooks/UseValidation";
+import { ProfileInput } from "../ProfileInput/ProfileInput";
+import { FormButton } from "../FormButton/FormButton";
 
 export function Profile({ profileData, logOut }) {
   const { profileName, profileEmail } = useContext(CurrentUserContext);
   const { values, onChange, setValues } = useForm({});
+  const [isValid, setIsValid] = useState({
+    name: false,
+    email: true,
+  });
   const [isEditMode, setMode] = useState(false);
+  const [isButtonActive, setIsButtonActive] = useState(true);
 
-  useEffect(() => setValues({name: profileName, email: profileEmail}), []);
+  useEffect(() => {
+    setIsValid({
+      name: false,
+      email: true,
+    });
+    setValues({ name: profileName, email: profileEmail });
+    setIsButtonActive(false);
+  }, []);
 
-  function checkInput(e, regax, advancedValidation){
-    const { validationResult, onChangee, isValid } = UseValidation({
-      initialValue: { isValid: false, error: "" },
-      regax: regax,
-      advancedValidation: advancedValidation,
-    })
-  }
+  useEffect(() => {
+    if (Object.values(isValid).every((item) => item)) {
+      if(values["name"] === profileName && values["email"] === profileEmail){
+        setIsButtonActive(false);
+      }else{
+        setIsButtonActive(true);
+      }
+    } else {
+      setIsButtonActive(false);
+    }
+  }, [isValid, values]);
 
   function handleModeSubmit(field) {
     setMode(!isEditMode);
+  }
+
+  function validateForm(name, value) {
+    setIsValid({ ...isValid, [name]: value });
   }
 
   return (
     <section className="profile">
       <h1 className="profile__title">{profileData.title(profileName)}</h1>
       <form className="profile__form" onSubmit={(e) => e.preventDefault()}>
-        <div className="profile__input-cell">
-          <h2 className="profile__input-title">Имя</h2>
-          {isEditMode ? (
-            <input
-              className="profile__input profile__input_active"
-              name="name"
-              value={values["name"] || profileName}
-              onChange={onChange}
-              type="text"
-              minLength={2}
-              maxLength={18}
-            />
-          ) : (
-            <p className="profile__input">{values["name"]}</p>
-          )}
-        </div>
-        <div className="profile__input-cell">
-          <h2 className="profile__input-title">Почта</h2>
-          {isEditMode ? (
-            <input
-              className="profile__input profile__input_active"
-              name="email"
-              value={values["email"] || profileEmail}
-              onChange={onChange}
-              type="text"
-              minLength={2}
-              maxLength={18}
-            />
-          ) : (
-            <p className="profile__input ">{values["email"]}</p>
-          )}
-        </div>
+        <ProfileInput
+          name={"name"}
+          inputTitle={"Имя"}
+          value={values["name"]}
+          profileData={profileName}
+          onChange={onChange}
+          validateForm={validateForm}
+          isEditMode={isEditMode}
+          regax={/[^a-zа-я\sё-]/gi}
+          advancedValidation={true}
+          setIsButtonActive={setIsButtonActive}
+        />
+        <ProfileInput
+          name={"email"}
+          inputTitle={"Почта"}
+          value={values["email"]}
+          profileData={profileEmail}
+          onChange={onChange}
+          validateForm={validateForm}
+          isEditMode={isEditMode}
+          regax={
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i
+          }
+          advancedValidation={true}
+          setIsButtonActive={setIsButtonActive}
+        />
         {isEditMode ? (
-          <button
-            onClick={() => handleModeSubmit()}
-            className="profile__save-button"
-          >
-            Сохранить
-          </button>
+          <FormButton
+            buttonStyle="profile__save-button"
+            isButtonActive={isButtonActive}
+            onClick={handleModeSubmit}
+            buttonText="Сохранить"
+          />
         ) : (
           <>
             <button

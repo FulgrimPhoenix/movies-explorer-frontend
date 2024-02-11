@@ -1,17 +1,22 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./LogRegForm.css";
+import { FormButton } from "../FormButton/FormButton";
 
-export function LogRegForm({ children, formData, isButtonActive, redirectLink }) {
-  const navigate =useNavigate();
+export function LogRegForm({
+  children,
+  formData,
+  isButtonActive,
+  redirectLink,
+}) {
+  const navigate = useNavigate();
 
-  function onClick(e){
+  function onClick(e) {
     e.preventDefault();
-    console.log('меня нажали');
-    
+    console.log("меня нажали");
   }
-  function onSubmit(e){
+  function onSubmit(e) {
     e.preventDefault();
-    navigate(redirectLink, { replace: true });    
+    navigate(redirectLink, { replace: true });
   }
   return (
     <form onSubmit={onSubmit} className="log-reg-form" noValidate>
@@ -22,13 +27,12 @@ export function LogRegForm({ children, formData, isButtonActive, redirectLink })
       </Link>
       <h1 className="log-reg-form__title">{formData.title}</h1>
       {children}
-      {isButtonActive ? (
-        <button className="log-reg-form__button" onClick={onClick}>{formData.buttonText}</button>
-      ) : (
-        <button className="log-reg-form__button" onClick={onClick} disabled>
-          {formData.buttonText}
-        </button>
-      )}
+      <FormButton
+        buttonStyle="log-reg-form__button"
+        isButtonActive={isButtonActive}
+        onClick={onClick}
+        buttonText={formData.buttonText}
+      />
     </form>
   );
 }

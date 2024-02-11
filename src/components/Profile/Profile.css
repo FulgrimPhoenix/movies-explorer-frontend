@@ -130,6 +130,13 @@
   color: #fff;
 }
 
+.profile__save-button:disabled{
+  background-color: #f8f8f8;
+  color: #c2c2c2;
+  cursor: default;
+  opacity: 1;
+}
+
 
 .profile__save-button:hover {
   opacity: .7;
