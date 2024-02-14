@@ -7,7 +7,8 @@ export function LogRegForm({
   formData,
   isButtonActive,
   redirectLink,
-  onSubmit
+  onSubmit,
+  serverErrorMessage
 }) {
 
   function onClick(e) {
@@ -24,6 +25,7 @@ export function LogRegForm({
       </Link>
       <h1 className="log-reg-form__title">{formData.title}</h1>
       {children}
+      <span className="log-reg-form__server-error">{serverErrorMessage}</span>
       <FormButton
         buttonStyle="log-reg-form__button"
         isButtonActive={isButtonActive}

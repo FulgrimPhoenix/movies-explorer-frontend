@@ -4,9 +4,10 @@ import "./Profile.css";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { ProfileInput } from "../ProfileInput/ProfileInput";
 import { FormButton } from "../FormButton/FormButton";
+import { api } from "../../utils/Api";
+import { useNavigate } from "react-router-dom";
 
-export function Profile({ profileData, logOut }) {
-  const { profileName, profileEmail } = useContext(CurrentUserContext);
+export function Profile({ profileData, handleSetIsLoggedIn }) {
   const { values, onChange, setValues } = useForm({});
   const [isValid, setIsValid] = useState({
     name: false,
@@ -14,27 +15,42 @@ export function Profile({ profileData, logOut }) {
   });
   const [isEditMode, setMode] = useState(false);
   const [isButtonActive, setIsButtonActive] = useState(true);
+  const userData = useContext(CurrentUserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsValid({
       name: false,
       email: true,
     });
-    setValues({ name: profileName, email: profileEmail });
+    setValues({ name: userData.name, email: userData.email });
     setIsButtonActive(false);
   }, []);
 
   useEffect(() => {
     if (Object.values(isValid).every((item) => item)) {
-      if(values["name"] === profileName && values["email"] === profileEmail){
+      if (
+        values["name"] === userData.name &&
+        values["email"] === userData.email
+      ) {
         setIsButtonActive(false);
-      }else{
+      } else {
         setIsButtonActive(true);
       }
     } else {
       setIsButtonActive(false);
     }
   }, [isValid, Object.values(values)]);
+
+  function signout() {
+    api
+      .signout()
+      .then(() => {
+        handleSetIsLoggedIn();
+        navigate("/", { replace: true });
+      })
+      .catch((err) => console.log(err));
+  }
 
   function handleModeSubmit(field) {
     setMode(!isEditMode);
@@ -46,13 +62,13 @@ export function Profile({ profileData, logOut }) {
 
   return (
     <section className="profile">
-      <h1 className="profile__title">{profileData.title(profileName)}</h1>
+      <h1 className="profile__title">{profileData.title(userData.name)}</h1>
       <form className="profile__form" onSubmit={(e) => e.preventDefault()}>
         <ProfileInput
           name={"name"}
           inputTitle={"Имя"}
           value={values["name"]}
-          profileData={profileName}
+          profileData={userData.name}
           onChange={onChange}
           validateForm={validateForm}
           isEditMode={isEditMode}
@@ -64,7 +80,7 @@ export function Profile({ profileData, logOut }) {
           name={"email"}
           inputTitle={"Почта"}
           value={values["email"]}
-          profileData={profileEmail}
+          profileData={userData.email}
           onChange={onChange}
           validateForm={validateForm}
           isEditMode={isEditMode}
@@ -84,12 +100,17 @@ export function Profile({ profileData, logOut }) {
         ) : (
           <>
             <button
+              type="button"
               onClick={() => handleModeSubmit()}
               className="profile__edit-button"
             >
               Редактировать
             </button>
-            <button onClick={() => logOut()} className="profile__logout-button">
+            <button
+              type="button"
+              onClick={signout}
+              className="profile__logout-button"
+            >
               Выйти из аккаунта
             </button>
           </>

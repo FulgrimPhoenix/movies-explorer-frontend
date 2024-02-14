@@ -14,8 +14,8 @@ class Api {
     return fetch(url, options).then(this._checkResponse);
   }
 
-  signup({name = "", email = "", password = ""}) {
-    return this._request(this._url + "signup", {
+  signup({ name = "", email = "", password = "" }) {
+    return fetch(this._url + "signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -29,8 +29,8 @@ class Api {
     });
   }
 
-  signin({email = "", password = ""}) {
-    return this._request(this._url + "signin", {
+  signin({ email = "", password = "" }) {
+    return fetch(this._url + "signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,6 +42,26 @@ class Api {
       }),
     });
   }
+
+  signout() {
+    return fetch(this._url + "signout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+  }
+
+  getMyUserInfo() {
+    return this._request(this._url + "users/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+  }
 }
 
-export const api = new Api({apiUrl : "https://api.mymovie.nomoredomainsmonster.ru/"});
+export const api = new Api({ apiUrl: "http://localhost:3001/" });

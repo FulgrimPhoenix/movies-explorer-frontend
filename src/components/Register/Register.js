@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { useUrlPathName } from "../../hooks/useUrlPathName";
 import { api } from "../../utils/Api";
 
-export function Register({ registerFormData }) {
+export function Register({ registerFormData, handleSetIsLoggedIn }) {
   const { values, onChange, setValues } = useForm([]);
   const [isValid, setIsValid] = useState({
     name: false,
@@ -43,13 +43,27 @@ export function Register({ registerFormData }) {
     api
       .signup(values)
       .then((res) => {
-        navigate("/", { replace: true });
+        if (res.status === 201) {
+          setServerError("");
+          api
+            .signin(values)
+            .then(() => {
+              handleSetIsLoggedIn();
+              navigate("/movies", { replace: true });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else if (res.status === 400) {
+          throw new Error("Данные введены не верно");
+        } else if (res.status === 409) {
+          throw new Error("Пользователь с таким email уже существует");
+        } else {
+          throw new Error("Ошибка на сервере");
+        }
       })
       .catch((err) => {
-        err.status === 409 ?
-        setServerError("Пользователь уже существует")
-        :
-        setServerError("Произошла ошибка")
+        setServerError(err.message);
       });
   }
 
@@ -60,6 +74,7 @@ export function Register({ registerFormData }) {
         isButtonActive={isButtonActive}
         redirectLink={"/movies"}
         onSubmit={handleSubmit}
+        serverErrorMessage={serverError}
       >
         <LogRegInput
           name="name"

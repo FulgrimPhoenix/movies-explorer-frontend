@@ -7,7 +7,7 @@ import "./Login.css";
 import { useEffect, useState } from "react";
 import { api } from "../../utils/Api";
 
-export function Login({ loginFormData }) {
+export function Login({ loginFormData, handleSetIsLoggedIn }) {
   const { values, onChange, setValues } = useForm({});
   const [isValid, setIsValid] = useState({ email: false, password: false });
   const [isButtonActive, setIsButtonActive] = useState(false);
@@ -36,13 +36,21 @@ export function Login({ loginFormData }) {
     e.preventDefault();
     api
       .signin(values)
-      .then((res) => {
-        navigate("/", { replace: true });
+      .then((res, req) => {
+        if (res.status === 200) {
+          setServerError("");
+          handleSetIsLoggedIn();
+          return navigate("/movies", { replace: true });
+        } else if (res.status === 401) {
+          throw new Error("Неверный логин или пароль");
+        } else if (res.status === 400) {
+          throw new Error("Данные введены не верно");
+        } else {
+          throw new Error("Что-то пошло не так");
+        }
       })
       .catch((err) => {
-        err.status === 409
-          ? setServerError("Пользователь уже существует")
-          : setServerError("Произошла ошибка");
+        setServerError(err.message);
       });
   }
 
@@ -53,6 +61,7 @@ export function Login({ loginFormData }) {
         isButtonActive={isButtonActive}
         redirectLink={"/movies"}
         onSubmit={handleSubmit}
+        serverErrorMessage={serverError}
       >
         <LogRegInput
           name="email"
