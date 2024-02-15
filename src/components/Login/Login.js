@@ -5,7 +5,7 @@ import { LogRegForm } from "../LogRegForm/LogRegForm";
 import { LogRegInput } from "../LogRegInput/LogRegInput";
 import "./Login.css";
 import { useEffect, useState } from "react";
-import { api } from "../../utils/Api";
+import { api } from "../../utils/MainApi";
 
 export function Login({ loginFormData, handleSetIsLoggedIn }) {
   const { values, onChange, setValues } = useForm({});

@@ -6,7 +6,7 @@ import "./Register.css";
 import { useForm } from "../../hooks/useForm";
 import { useEffect, useState } from "react";
 import { useUrlPathName } from "../../hooks/useUrlPathName";
-import { api } from "../../utils/Api";
+import { api } from "../../utils/MainApi";
 
 export function Register({ registerFormData, handleSetIsLoggedIn }) {
   const { values, onChange, setValues } = useForm([]);

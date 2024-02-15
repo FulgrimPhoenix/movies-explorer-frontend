@@ -82,42 +82,42 @@ export const projectConstants = {
   },
   moviesData: {
     movieList: [
-      {
-        imgSrcHQ: slova_o_disaineHQ,
-        imgSrc: slova_o_disaineLQ,
-        title: "33 слова о дизайне",
-        duration: "1ч 17м",
-      },
-      {
-        imgSrcHQ: kinoalmanaxHQ,
-        imgSrc: kinoalmanaxLQ,
-        title: "Киноальманах «100 лет дизайна»",
-        duration: "1ч 17м",
-      },
-      {
-        imgSrcHQ: v_pogone_za_BenksiHQ,
-        imgSrc: v_pogone_za_BenksiLQ,
-        title: "В погоне за Бенкси",
-        duration: "1ч 17м",
-      },
-      {
-        imgSrcHQ: slova_o_disaineHQ,
-        imgSrc: slova_o_disaineLQ,
-        title: "33 слова о дизайне1",
-        duration: "1ч 17м",
-      },
-      {
-        imgSrcHQ: kinoalmanaxHQ,
-        imgSrc: kinoalmanaxLQ,
-        title: "Киноальманах «100 лет дизайна»1",
-        duration: "1ч 17м",
-      },
-      {
-        imgSrcHQ: v_pogone_za_BenksiHQ,
-        imgSrc: v_pogone_za_BenksiLQ,
-        title: "В погоне за Бенкси1",
-        duration: "1ч 17м",
-      },
+      // {
+      //   imgSrcHQ: slova_o_disaineHQ,
+      //   imgSrc: slova_o_disaineLQ,
+      //   title: "33 слова о дизайне",
+      //   duration: "1ч 17м",
+      // },
+      // {
+      //   imgSrcHQ: kinoalmanaxHQ,
+      //   imgSrc: kinoalmanaxLQ,
+      //   title: "Киноальманах «100 лет дизайна»",
+      //   duration: "1ч 17м",
+      // },
+      // {
+      //   imgSrcHQ: v_pogone_za_BenksiHQ,
+      //   imgSrc: v_pogone_za_BenksiLQ,
+      //   title: "В погоне за Бенкси",
+      //   duration: "1ч 17м",
+      // },
+      // {
+      //   imgSrcHQ: slova_o_disaineHQ,
+      //   imgSrc: slova_o_disaineLQ,
+      //   title: "33 слова о дизайне1",
+      //   duration: "1ч 17м",
+      // },
+      // {
+      //   imgSrcHQ: kinoalmanaxHQ,
+      //   imgSrc: kinoalmanaxLQ,
+      //   title: "Киноальманах «100 лет дизайна»1",
+      //   duration: "1ч 17м",
+      // },
+      // {
+      //   imgSrcHQ: v_pogone_za_BenksiHQ,
+      //   imgSrc: v_pogone_za_BenksiLQ,
+      //   title: "В погоне за Бенкси1",
+      //   duration: "1ч 17м",
+      // },
     ],
     staticData: {
       saveButtonText: "Сохранить",

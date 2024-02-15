@@ -19,12 +19,12 @@
 .card__img {
   width: 100%;
   height: 100%;
-  max-width: 360px;
-  max-height: 200px;
+
 }
 
 .card__img-container {
-  max-height: 201px;
+  max-width: 360px;
+  height: 201px;
 }
 
 .card__status-container {
@@ -69,6 +69,13 @@
 
 .card__title {
   margin: 0;
+  font-family: Inter;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: 0px;
+  text-align: left;
+  
 }
 
 .card__duration-container {
@@ -93,6 +100,10 @@
     margin-top: 22px;
     padding: 0;
   }
+
+  .card__img-container{
+    height: 190px;
+  }
 }
 
 
@@ -103,7 +114,7 @@
   }
 
   .card__img-container{
-    max-height: 168px;
+    height: 168px;
   }
 
   .card__title {

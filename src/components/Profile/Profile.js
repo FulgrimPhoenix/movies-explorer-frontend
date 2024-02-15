@@ -4,7 +4,7 @@ import "./Profile.css";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { ProfileInput } from "../ProfileInput/ProfileInput";
 import { FormButton } from "../FormButton/FormButton";
-import { api } from "../../utils/Api";
+import { api } from "../../utils/MainApi";
 import { useNavigate } from "react-router-dom";
 
 export function Profile({ profileData, handleSetIsLoggedIn }) {

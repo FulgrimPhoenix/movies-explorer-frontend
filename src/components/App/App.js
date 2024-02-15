@@ -18,20 +18,26 @@ import { Page } from "../Page/Page.js";
 import { MenuPopup } from "../MenuPopup/MenuPopup.js";
 import { useUrlPathName } from "../../hooks/useUrlPathName.js";
 import { NotFoundPage } from "../NotFoundPage/NotFoundPage.js";
-import { api } from "../../utils/Api.js";
+import { api } from "../../utils/MainApi.js";
 import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute.js";
+import { moviesApi } from "../../utils/MoviesApi.js";
 
 function App() {
   const [isLoggedIn, setisLoggedIn] = React.useState(false);
   const [isMenuPopupOpen, setIsMenuPopupOpen] = React.useState(false);
   const [userData, setUserData] = React.useState({});
+  const [moviesList, setMoviesList] = React.useState([]);
+  const [currentMoviesList, setCurrentMoviesList] = React.useState()
   const isProfilePage = useUrlPathName() === "/profile";
   const navigate = useNavigate();
 
   useEffect(() => {
-    Promise.all([api.getMyUserInfo()])
-      .then(([myData]) => {
+    setCurrentMoviesList(JSON.parse(localStorage.getItem("moviesList")))
+    Promise.all([api.getMyUserInfo(), moviesApi.getMoviesList()])
+      .then(([myData, moviesList]) => {      
         setUserData(myData);
+        setMoviesList(moviesList);
+        console.log(moviesList);
         setisLoggedIn(true);
       })
       .catch((err) => {
@@ -39,11 +45,7 @@ function App() {
         console.log(err);
       });
   }, []);
-
-  function handleChangeUserData({ name, email }) {
-    setUserData({ name: name, email: email });
-  }
-
+  
   function handleSetIsLoggedIn() {
     setisLoggedIn(!isLoggedIn);
   }
@@ -94,10 +96,12 @@ function App() {
                   <>
                     <SearchForm
                       formSearchUtils={projectConstants.formSearchUtils}
+                      moviesList={moviesList}
+                      setCurrentMoviesList={setCurrentMoviesList}
                     />
                     <MovieCardList
                       cardCellData={projectConstants.moviesData.staticData}
-                      movieList={projectConstants.moviesData.movieList}
+                      movieList={JSON.parse(localStorage.getItem("moviesList"))}
                     />
                   </>
                 }

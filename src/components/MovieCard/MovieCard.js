@@ -18,11 +18,11 @@ export function MovieCard({ cardData, cellData }) {
           )}
         </div>
         <picture>
-          <img className="card__img" src={cardData.imgSrc} alt={cardData.title} />
+          <img className="card__img" src={`https://api.nomoreparties.co${cardData.image.url}`} alt={cardData.title} />
         </picture>
       </div>
       <div className="card__description">
-        <p className="card__title">{cardData.title}</p>
+        <p className="card__title">{cardData.nameRU}</p>
         <div className="card__duration-container">
           <p className="card__duration-time">{cardData.duration}</p>
         </div>
