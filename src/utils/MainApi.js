@@ -62,6 +62,43 @@ class Api {
       credentials: "include",
     });
   }
+
+  getMyMovieList() {
+    return this._request(this._url + "movies", {
+      method: "GET",
+      credentials: "include",
+    });
+  }
+
+  likeThisMovie(movieData){
+    return this._request(this._url + "movies", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(movieData)
+    });
+  }
+  unLikeThisMovie(movieId){
+    return this._request(this._url + `movies/${movieId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include"
+    });
+  }
+  updateProfileInfo(newData){
+    return this._request(this._url + `users/me`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(newData)
+    })
+  }
 }
 
-export const api = new Api({ apiUrl: "http://localhost:3001/" });
+export const api = new Api({ apiUrl: "https://api.mymovie.nomoredomainsmonster.ru/" });

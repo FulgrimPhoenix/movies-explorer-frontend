@@ -90,7 +90,7 @@ export function Header({ togglePopup, headerData, isLoggedIn }) {
                             src={
                               isMainPage
                                 ? headerData.accauntImgPink
-                                : headerData.legacyAccauntImg
+                                : headerData.accauntImg
                             }
                             alt="логотип"
                           />

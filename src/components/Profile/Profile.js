@@ -7,7 +7,7 @@ import { FormButton } from "../FormButton/FormButton";
 import { api } from "../../utils/MainApi";
 import { useNavigate } from "react-router-dom";
 
-export function Profile({ profileData, handleSetIsLoggedIn }) {
+export function Profile({ profileData, handleSetIsLoggedIn, setUserData }) {
   const { values, onChange, setValues } = useForm({});
   const [isValid, setIsValid] = useState({
     name: false,
@@ -60,10 +60,18 @@ export function Profile({ profileData, handleSetIsLoggedIn }) {
     setIsValid({ ...isValid, [name]: value });
   }
 
+  function updateMyInfo(e, newValue) {
+    e.preventDefault()
+    api
+      .updateProfileInfo(newValue)
+      .then((res) => setUserData(res))
+      .catch((err) => console.log(err));
+  }
+
   return (
     <section className="profile">
       <h1 className="profile__title">{profileData.title(userData.name)}</h1>
-      <form className="profile__form" onSubmit={(e) => e.preventDefault()}>
+      <form className="profile__form" onSubmit={(e) => updateMyInfo(e, values)}>
         <ProfileInput
           name={"name"}
           inputTitle={"Имя"}

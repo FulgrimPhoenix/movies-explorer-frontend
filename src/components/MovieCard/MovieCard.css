@@ -27,6 +27,12 @@
   height: 201px;
 }
 
+.card__link{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
 .card__status-container {
   transition: 0.4s;
   z-index: -1;
@@ -75,7 +81,7 @@
   line-height: 16px;
   letter-spacing: 0px;
   text-align: left;
-  
+  max-width: 280px;
 }
 
 .card__duration-container {

@@ -4,8 +4,15 @@ import "./MovieCardList.css";
 import { useWindowSize } from "../../hooks/useWindowSize";
 import { useUrlPathName } from "../../hooks/useUrlPathName";
 
-export function MovieCardList({ cardCellData, movieList }) {
+export function MovieCardList({
+  // cardCellData,
+  movieList,
+  myMoviesList,
+  setmyMoviesList,
+}) {
   const currentWidth = useWindowSize();
+  const currentPath = useUrlPathName();
+  // const movieList =  moviesList
   const [cardListLength, setCardListLength] = useState(() => {
     if (currentWidth > 1079) {
       if (movieList.length < 12) {
@@ -29,8 +36,6 @@ export function MovieCardList({ cardCellData, movieList }) {
   });
   const [searchResultText, setSearchResultText] = useState("Ничего не найдено");
   const [counderOfAdditionalCards, setCounderOfAdditionalCards] = useState(3);
-  const findedCardList = [];
-  const currentPath = useUrlPathName();
 
   const [cardList, setCardList] = useState(
     setPageCardList(movieList, cardListLength)
@@ -41,9 +46,12 @@ export function MovieCardList({ cardCellData, movieList }) {
   }, []);
 
   useEffect(() => {
-    setCardList(movieList);
-    setListSettings(currentWidth)
-  }, [movieList]);
+    if (currentPath === "/movies") {
+      setCardList(setPageCardList(movieList, cardListLength));
+    } else if (currentPath === "/saved-movies") {
+      setCardList(setPageCardList(movieList, movieList.length));
+    }
+  }, [movieList, currentPath]);
 
   useEffect(() => {
     setCardList(setPageCardList(movieList, cardListLength));
@@ -51,7 +59,7 @@ export function MovieCardList({ cardCellData, movieList }) {
 
   useEffect(() => {
     setListSettings(currentWidth);
-  }, [currentWidth]);
+  }, [currentWidth, movieList]);
 
   function setPageCardList(cardPull, listLength) {
     let result = [];
@@ -99,26 +107,30 @@ export function MovieCardList({ cardCellData, movieList }) {
     setCardListLength(cardListLength + counderOfAdditionalCards);
   }
 
-  console.log(cardList);
-
   return (
     <div className="movie-card-list">
-      {cardList !== 0 && cardList !== null ? (
+      {cardList.length !== 0 && cardList !== null ? (
         <>
           <ul className="movie-card-list__grid">
             {cardList.map((card) => {
+              if (!card) {
+                return
+              }
               return (
                 <MovieCard
-                  // key={card.nameEN}
+                  key={card.nameEN}
+                  myMoviesList={myMoviesList}
+                  setmyMoviesList={setmyMoviesList}
                   cardData={card}
-                  cellData={cardCellData}
+                  // cellData={cardCellData}
                 />
               );
             })}
           </ul>
           <button
             className={`${
-              cardListLength === movieList.length
+              cardListLength === movieList.length ||
+              currentPath === "/saved-movies"
                 ? "movie-card-list__button-more_disabled"
                 : "movie-card-list__button-more"
             }`}

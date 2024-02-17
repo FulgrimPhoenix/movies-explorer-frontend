@@ -27,17 +27,22 @@ function App() {
   const [isMenuPopupOpen, setIsMenuPopupOpen] = React.useState(false);
   const [userData, setUserData] = React.useState({});
   const [moviesList, setMoviesList] = React.useState([]);
-  const [currentMoviesList, setCurrentMoviesList] = React.useState()
+  const [myMoviesList, setmyMoviesList] = React.useState([]);
+  const [currentMoviesList, setCurrentMoviesList] = React.useState();
   const isProfilePage = useUrlPathName() === "/profile";
   const navigate = useNavigate();
 
   useEffect(() => {
-    setCurrentMoviesList(JSON.parse(localStorage.getItem("moviesList")))
-    Promise.all([api.getMyUserInfo(), moviesApi.getMoviesList()])
-      .then(([myData, moviesList]) => {      
+    setCurrentMoviesList(JSON.parse(localStorage.getItem("moviesList")));
+    Promise.all([
+      api.getMyUserInfo(),
+      moviesApi.getMoviesList(),
+      api.getMyMovieList(),
+    ])
+      .then(([myData, moviesList, myMoviesList]) => {
         setUserData(myData);
         setMoviesList(moviesList);
-        console.log(moviesList);
+        setmyMoviesList(myMoviesList);
         setisLoggedIn(true);
       })
       .catch((err) => {
@@ -45,7 +50,7 @@ function App() {
         console.log(err);
       });
   }, []);
-  
+
   function handleSetIsLoggedIn() {
     setisLoggedIn(!isLoggedIn);
   }
@@ -98,10 +103,13 @@ function App() {
                       formSearchUtils={projectConstants.formSearchUtils}
                       moviesList={moviesList}
                       setCurrentMoviesList={setCurrentMoviesList}
+                      name={"searchBar"}
                     />
                     <MovieCardList
-                      cardCellData={projectConstants.moviesData.staticData}
+                      // cardCellData={projectConstants.moviesData.staticData}
                       movieList={JSON.parse(localStorage.getItem("moviesList"))}
+                      myMoviesList={myMoviesList}
+                      setmyMoviesList={setmyMoviesList}
                     />
                   </>
                 }
@@ -109,9 +117,20 @@ function App() {
               <Route
                 path="saved-movies"
                 element={
-                  <SearchForm
-                    formSearchUtils={projectConstants.formSearchUtils}
-                  />
+                  <>
+                    <SearchForm
+                      formSearchUtils={projectConstants.formSearchUtils}
+                      moviesList={myMoviesList}
+                      setCurrentMoviesList={setmyMoviesList}
+                      name={"savedMoviesSearchBar"}
+                    />
+                    <MovieCardList
+                      // cardCellData={projectConstants.moviesData.staticData}
+                      movieList={myMoviesList}
+                      myMoviesList={myMoviesList}
+                      setmyMoviesList={setmyMoviesList}
+                    />
+                  </>
                 }
               />
               <Route
@@ -120,6 +139,7 @@ function App() {
                   <Profile
                     profileData={projectConstants.profileData}
                     handleSetIsLoggedIn={handleSetIsLoggedIn}
+                    setUserData={setUserData}
                   />
                 }
               />
