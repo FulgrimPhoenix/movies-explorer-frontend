@@ -28,12 +28,13 @@ function App() {
   const [userData, setUserData] = React.useState({});
   const [moviesList, setMoviesList] = React.useState([]);
   const [myMoviesList, setmyMoviesList] = React.useState([]);
-  const [currentMoviesList, setCurrentMoviesList] = React.useState();
+  const [searchResultAmongAllMovies, setSearchResultAmongAllMovies] = React.useState(JSON.parse(localStorage.getItem("moviesList")) || "")
+  const [searchResultAmongMyMovies, setSearchResultAmongMyMovies] = React.useState([]);
+  const [searchErrorResultText, setSearchErrorResultText] = React.useState("Ничего не найдено");
   const isProfilePage = useUrlPathName() === "/profile";
   const navigate = useNavigate();
 
   useEffect(() => {
-    setCurrentMoviesList(JSON.parse(localStorage.getItem("moviesList")));
     Promise.all([
       api.getMyUserInfo(),
       moviesApi.getMoviesList(),
@@ -43,9 +44,12 @@ function App() {
         setUserData(myData);
         setMoviesList(moviesList);
         setmyMoviesList(myMoviesList);
+        setSearchResultAmongMyMovies(myMoviesList);
         setisLoggedIn(true);
+        console.log(moviesList);
       })
       .catch((err) => {
+        setSearchErrorResultText("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз")
         setisLoggedIn(false);
         console.log(err);
       });
@@ -53,6 +57,16 @@ function App() {
 
   function handleSetIsLoggedIn() {
     setisLoggedIn(!isLoggedIn);
+  }
+
+  function resetSearch(){
+    setSearchResultAmongAllMovies(moviesList);
+    setSearchResultAmongMyMovies(myMoviesList);
+  }
+
+  function updateMyMoviesList(newList){
+    setSearchResultAmongAllMovies(newList)
+    setmyMoviesList(newList);
   }
 
   function goBack() {
@@ -102,14 +116,14 @@ function App() {
                     <SearchForm
                       formSearchUtils={projectConstants.formSearchUtils}
                       moviesList={moviesList}
-                      setCurrentMoviesList={setCurrentMoviesList}
+                      setCurrentMoviesList={setSearchResultAmongAllMovies}
                       name={"searchBar"}
                     />
                     <MovieCardList
-                      // cardCellData={projectConstants.moviesData.staticData}
-                      movieList={JSON.parse(localStorage.getItem("moviesList"))}
+                      moviesList={searchResultAmongAllMovies}
                       myMoviesList={myMoviesList}
                       setmyMoviesList={setmyMoviesList}
+                      searchErrorResultText={searchErrorResultText}
                     />
                   </>
                 }
@@ -121,14 +135,14 @@ function App() {
                     <SearchForm
                       formSearchUtils={projectConstants.formSearchUtils}
                       moviesList={myMoviesList}
-                      setCurrentMoviesList={setmyMoviesList}
+                      setCurrentMoviesList={setSearchResultAmongMyMovies}
                       name={"savedMoviesSearchBar"}
                     />
                     <MovieCardList
-                      // cardCellData={projectConstants.moviesData.staticData}
-                      movieList={myMoviesList}
-                      myMoviesList={myMoviesList}
-                      setmyMoviesList={setmyMoviesList}
+                      moviesList={searchResultAmongMyMovies}
+                      myMoviesList={searchResultAmongMyMovies}
+                      setmyMoviesList={updateMyMoviesList}
+                      searchErrorResultText={searchErrorResultText}
                     />
                   </>
                 }
@@ -140,6 +154,7 @@ function App() {
                     profileData={projectConstants.profileData}
                     handleSetIsLoggedIn={handleSetIsLoggedIn}
                     setUserData={setUserData}
+                    resetSearch={resetSearch}
                   />
                 }
               />

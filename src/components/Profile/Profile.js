@@ -7,7 +7,7 @@ import { FormButton } from "../FormButton/FormButton";
 import { api } from "../../utils/MainApi";
 import { useNavigate } from "react-router-dom";
 
-export function Profile({ profileData, handleSetIsLoggedIn, setUserData }) {
+export function Profile({ profileData, handleSetIsLoggedIn, setUserData, resetSearch }) {
   const { values, onChange, setValues } = useForm({});
   const [isValid, setIsValid] = useState({
     name: false,
@@ -47,6 +47,8 @@ export function Profile({ profileData, handleSetIsLoggedIn, setUserData }) {
       .signout()
       .then(() => {
         handleSetIsLoggedIn();
+        resetSearch();
+        localStorage.clear();
         navigate("/", { replace: true });
       })
       .catch((err) => console.log(err));

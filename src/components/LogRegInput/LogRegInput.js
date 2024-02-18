@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import "./LogRegInput.css";
-import { UseValidation } from "../../hooks/UseValidation";
+import { UseValidation } from "../../hooks/useValidation";
 
 export function LogRegInput({
   title,

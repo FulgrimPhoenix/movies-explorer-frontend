@@ -13,11 +13,11 @@ export function SearchForm({
   const windowWidth = useWindowSize();
   const currentPath = useUrlPathName();
   const { values, onChange } = useForm({
-    searchBar: localStorage.getItem("searchRequest"),
+    searchBar: localStorage.getItem("searchRequest") || "",
     savedMoviesSearchBar: "",
   });
   const [isShortMovies, setIsShortMovies] = useState(
-    name === "searchBar" ? JSON.parse(localStorage.getItem("checkbox")) : false
+    name === "searchBar" ? JSON.parse(localStorage.getItem("checkbox")) || "" : false
   );
 
   function searchMovies(list, searchRequest) {
@@ -34,11 +34,16 @@ export function SearchForm({
         return nameRU.includes(request) || nameEN.includes(request);
       }
     });
-    localStorage.setItem("checkbox", JSON.stringify(isShortMovies));
-    localStorage.setItem("searchRequest", `${searchRequest}`);
-    localStorage.setItem("moviesList", JSON.stringify(searchResult));
-    setCurrentMoviesList(searchResult);
-    console.log(JSON.parse(localStorage.getItem("moviesList")));
+    if (currentPath === '/movies') {
+      localStorage.setItem("checkbox", JSON.stringify(isShortMovies));
+      localStorage.setItem("searchRequest", `${searchRequest}`);
+      localStorage.setItem("moviesList", JSON.stringify(searchResult));
+      console.log(JSON.parse(localStorage.getItem("moviesList")));
+      setCurrentMoviesList(searchResult);
+    }else{
+      setCurrentMoviesList(searchResult);
+      console.log(searchResult);
+    }
   }
 
   return (
@@ -70,7 +75,7 @@ export function SearchForm({
           <button
             className="search__button"
             onClick={() =>
-              searchMovies(moviesList, values["searchBar"])
+              searchMovies(moviesList, currentPath === "/movies" ? values["searchBar"] : values["savedMoviesSearchBar"])
             } /*onSubmit={formUtils.onSubmit}*/
           >
             {formSearchUtils.button_text}
@@ -114,7 +119,7 @@ export function SearchForm({
             <button
               className="search__button"
               onClick={() =>
-                searchMovies(moviesList, values["searchBar"])
+                searchMovies(moviesList, currentPath === "/movies" ? values["searchBar"] : values["savedMoviesSearchBar"])
               } /*onSubmit={formUtils.onSubmit}*/
             >
               {formSearchUtils.button_text}

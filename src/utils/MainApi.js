@@ -50,6 +50,7 @@ class Api {
         "Content-Type": "application/json",
       },
       credentials: "include",
+      
     });
   }
 
@@ -58,6 +59,7 @@ class Api {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        "Cookie": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWQxMjU4ZWJjZjE2NDkyNjNkYjdkYjkiLCJpYXQiOjE3MDgyNjczNDAsImV4cCI6MTcwODM1Mzc0MH0.XE2N5YAtdxo6ftDfuvUhdDghZP0-5Ot-V3eURBSHOjg"
       },
       credentials: "include",
     });
@@ -66,6 +68,9 @@ class Api {
   getMyMovieList() {
     return this._request(this._url + "movies", {
       method: "GET",
+      headers: {
+        "Set-Cookie": "SameSite=None; Secure"
+      },
       credentials: "include",
     });
   }
@@ -75,6 +80,7 @@ class Api {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Set-Cookie": "SameSite=None; Secure"
       },
       credentials: "include",
       body: JSON.stringify(movieData)
@@ -85,6 +91,7 @@ class Api {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        "Set-Cookie": "SameSite=None; Secure"
       },
       credentials: "include"
     });
@@ -94,6 +101,7 @@ class Api {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Set-Cookie": "SameSite=None; Secure"
       },
       credentials: "include",
       body: JSON.stringify(newData)
@@ -101,4 +109,4 @@ class Api {
   }
 }
 
-export const api = new Api({ apiUrl: "https://api.mymovie.nomoredomainsmonster.ru/" });
+export const api = new Api({ apiUrl: "http://localhost:3001/" });

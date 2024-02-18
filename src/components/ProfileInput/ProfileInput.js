@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { UseValidation } from "../../hooks/UseValidation";
+import { UseValidation } from "../../hooks/useValidation";
 
 export function ProfileInput({
   name,
