@@ -41,6 +41,7 @@ export function MovieCard({
   function toggleLikeMovie() {
     if (currentPath === "/movies") {
       if (isLiked) {
+        console.log(myMoviesList);
         api
           .unLikeThisMovie(
             myMoviesList.find((movie) => movie.movieId === cardData.id)._id
@@ -49,6 +50,7 @@ export function MovieCard({
             api.getMyMovieList().then((res) => {
               setmyMoviesList(res);
               setIsLiked(checkForLike(res));
+              setIsLiked(false)
             });
           })
           .catch((err) => console.log(err));
@@ -59,8 +61,10 @@ export function MovieCard({
             api
               .getMyMovieList()
               .then((res) => {
+                console.log(321, res);
                 setmyMoviesList(res);
                 setIsLiked(checkForLike(res));
+                setIsLiked(true)
               })
               .catch((err) => console.log(err));
           })
@@ -71,8 +75,10 @@ export function MovieCard({
         .unLikeThisMovie(cardData._id)
         .then(() => {
           api.getMyMovieList().then((res) => {
+            console.log(res);
             setmyMoviesList(res);
             setIsLiked(checkForLike(res));
+            setIsLiked(false)
           });
         })
         .catch((err) => console.log(err));

@@ -40,6 +40,7 @@ export function MovieCardList({
   }, [currentPath])
 
   function showCards(cardList, cardListLength) {
+    console.log(123, cardList);
     const currentList = cardList.slice(0, cardListLength)
     return currentList.map((movie) =>
       <MovieCard

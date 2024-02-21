@@ -43,17 +43,17 @@ function App() {
       .then(([myData, moviesList, myMoviesList]) => {
         setUserData(myData);
         setMoviesList(moviesList);
+        setSearchResultAmongAllMovies(moviesList);
         setmyMoviesList(myMoviesList);
         setSearchResultAmongMyMovies(myMoviesList);
         setisLoggedIn(true);
-        console.log(moviesList);
       })
       .catch((err) => {
         setSearchErrorResultText("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз")
         setisLoggedIn(false);
         console.log(err);
       });
-  }, []);
+  }, [isLoggedIn]);
 
   function handleSetIsLoggedIn() {
     setisLoggedIn(!isLoggedIn);
@@ -65,8 +65,7 @@ function App() {
   }
 
   function updateMyMoviesList(newList){
-    setSearchResultAmongAllMovies(newList)
-    setmyMoviesList(newList);
+    setSearchResultAmongMyMovies(newList);
   }
 
   function goBack() {
@@ -122,7 +121,7 @@ function App() {
                     <MovieCardList
                       moviesList={searchResultAmongAllMovies}
                       myMoviesList={myMoviesList}
-                      setmyMoviesList={setmyMoviesList}
+                      setmyMoviesList={updateMyMoviesList}
                       searchErrorResultText={searchErrorResultText}
                     />
                   </>
