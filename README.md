@@ -12,3 +12,6 @@
 ### Ссылки на рабочие версии:
 - [Frontend](https://mymovie.nomoredomainswork.ru/)
 - [Backend](https://api.mymovie.nomoredomainsmonster.ru/)
+
+### Ссылка на пул реквест:
+ - [Pull request](https://github.com/FulgrimPhoenix/movies-explorer-frontend/pull/2#issue-2146983161)
