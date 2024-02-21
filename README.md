@@ -10,5 +10,5 @@
 - [Ознакомится с историей разработки/коммитов можно здесь в ветке level-2](https://github.com/FulgrimPhoenix/movies-explorer-frontend-err)
 
 ### Ссылки на рабочие версии:
-[Frontend](https://mymovie.nomoredomainswork.ru/)
-[Backend](https://api.mymovie.nomoredomainsmonster.ru/)
+- [Frontend](https://mymovie.nomoredomainswork.ru/)
+- [Backend](https://api.mymovie.nomoredomainsmonster.ru/)
