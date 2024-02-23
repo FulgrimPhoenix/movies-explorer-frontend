@@ -9,6 +9,7 @@ export function SearchForm({
   moviesList,
   setCurrentMoviesList,
   name,
+  setSearchErrorResultText,
 }) {
   const windowWidth = useWindowSize();
   const currentPath = useUrlPathName();
@@ -17,10 +18,12 @@ export function SearchForm({
     savedMoviesSearchBar: "",
   });
   const [isShortMovies, setIsShortMovies] = useState(
-    name === "searchBar" ? JSON.parse(localStorage.getItem("checkbox")) || "" : false
+    name === "searchBar"
+      ? JSON.parse(localStorage.getItem("checkbox")) || ""
+      : false
   );
 
-  function searchMovies(list, searchRequest) {
+  function searchMovies(isShortMovies, list, searchRequest) {
     const searchResult = list.filter((movie) => {
       const nameRU = movie.nameRU.toLowerCase();
       const nameEN = movie.nameEN.toLowerCase();
@@ -34,15 +37,19 @@ export function SearchForm({
         return nameRU.includes(request) || nameEN.includes(request);
       }
     });
-    if (currentPath === '/movies') {
+    if (currentPath === "/movies") {
       localStorage.setItem("checkbox", JSON.stringify(isShortMovies));
       localStorage.setItem("searchRequest", `${searchRequest}`);
       localStorage.setItem("moviesList", JSON.stringify(searchResult));
-      console.log(JSON.parse(localStorage.getItem("moviesList")));
       setCurrentMoviesList(searchResult);
-    }else{
+      searchResult.length === 0
+        ? setSearchErrorResultText("По вашему запросу ничего не найдено")
+        : setSearchErrorResultText("");
+    } else {
       setCurrentMoviesList(searchResult);
-      console.log(searchResult);
+      searchResult.length === 0
+        ? setSearchErrorResultText("По вашему запросу ничего не найдено")
+        : setSearchErrorResultText("");
     }
   }
 
@@ -67,7 +74,6 @@ export function SearchForm({
             value={values[name] || ""}
             onChange={(e) => {
               onChange(e);
-              console.log(values);
             }}
             placeholder="Фильмы"
             required
@@ -75,7 +81,13 @@ export function SearchForm({
           <button
             className="search__button"
             onClick={() =>
-              searchMovies(moviesList, currentPath === "/movies" ? values["searchBar"] : values["savedMoviesSearchBar"])
+              searchMovies(
+                isShortMovies,
+                moviesList,
+                currentPath === "/movies"
+                  ? values["searchBar"]
+                  : values["savedMoviesSearchBar"]
+              )
             } /*onSubmit={formUtils.onSubmit}*/
           >
             {formSearchUtils.button_text}
@@ -89,6 +101,13 @@ export function SearchForm({
               checked={isShortMovies}
               onChange={(e) => {
                 setIsShortMovies(e.target.checked);
+                searchMovies(
+                  e.target.checked,
+                  moviesList,
+                  currentPath === "/movies"
+                    ? values["searchBar"]
+                    : values["savedMoviesSearchBar"]
+                );
               }}
             />
             <label
@@ -119,7 +138,13 @@ export function SearchForm({
             <button
               className="search__button"
               onClick={() =>
-                searchMovies(moviesList, currentPath === "/movies" ? values["searchBar"] : values["savedMoviesSearchBar"])
+                searchMovies(
+                  isShortMovies,
+                  moviesList,
+                  currentPath === "/movies"
+                    ? values["searchBar"]
+                    : values["savedMoviesSearchBar"]
+                )
               } /*onSubmit={formUtils.onSubmit}*/
             >
               {formSearchUtils.button_text}
@@ -132,6 +157,16 @@ export function SearchForm({
               name="shortfilm"
               id="shortfilm"
               value="no"
+              onChange={(e) => {
+                setIsShortMovies(e.target.checked);
+                searchMovies(
+                  e.target.checked,
+                  moviesList,
+                  currentPath === "/movies"
+                    ? values["searchBar"]
+                    : values["savedMoviesSearchBar"]
+                );
+              }}
             />
             <label
               htmlFor="shortfilm"

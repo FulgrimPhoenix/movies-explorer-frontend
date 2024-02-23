@@ -7,7 +7,13 @@ import { FormButton } from "../FormButton/FormButton";
 import { api } from "../../utils/MainApi";
 import { useNavigate } from "react-router-dom";
 
-export function Profile({ profileData, handleSetIsLoggedIn, setUserData, resetSearch }) {
+export function Profile({
+  profileData,
+  handleSetIsLoggedIn,
+  setUserData,
+  resetSearch,
+  signOut
+}) {
   const { values, onChange, setValues } = useForm({});
   const [isValid, setIsValid] = useState({
     name: false,
@@ -15,6 +21,9 @@ export function Profile({ profileData, handleSetIsLoggedIn, setUserData, resetSe
   });
   const [isEditMode, setMode] = useState(false);
   const [isButtonActive, setIsButtonActive] = useState(true);
+  const [isInputActive, setIsInputActive] = useState(true);
+  const [reqStatus, setReqStatus] = useState(true);
+  const [reqStatusText, setReqStatusText] = useState("");
   const userData = useContext(CurrentUserContext);
   const navigate = useNavigate();
 
@@ -47,6 +56,7 @@ export function Profile({ profileData, handleSetIsLoggedIn, setUserData, resetSe
       .signout()
       .then(() => {
         handleSetIsLoggedIn();
+        signOut();
         resetSearch();
         localStorage.clear();
         navigate("/", { replace: true });
@@ -62,12 +72,28 @@ export function Profile({ profileData, handleSetIsLoggedIn, setUserData, resetSe
     setIsValid({ ...isValid, [name]: value });
   }
 
+  function onInputChange(e){
+    onChange(e);
+    setReqStatusText("");
+  }
+
   function updateMyInfo(e, newValue) {
-    e.preventDefault()
+    setIsButtonActive(false);
+    e.preventDefault();
     api
       .updateProfileInfo(newValue)
-      .then((res) => setUserData(res))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        setUserData(res);
+        setIsButtonActive(true);
+        setReqStatusText("Данные успешно обновлены");
+        setReqStatus(true)
+      })
+      .catch((err) => {
+        console.log(err);
+        setReqStatusText(`Произошла ошибкаЖ ${err.message}`);
+        setReqStatus(false)
+        setIsButtonActive(true);
+      });
   }
 
   return (
@@ -79,7 +105,7 @@ export function Profile({ profileData, handleSetIsLoggedIn, setUserData, resetSe
           inputTitle={"Имя"}
           value={values["name"]}
           profileData={userData.name}
-          onChange={onChange}
+          onChange={onInputChange}
           validateForm={validateForm}
           isEditMode={isEditMode}
           regax={/[^a-zа-я\sё-]/gi}
@@ -91,7 +117,7 @@ export function Profile({ profileData, handleSetIsLoggedIn, setUserData, resetSe
           inputTitle={"Почта"}
           value={values["email"]}
           profileData={userData.email}
-          onChange={onChange}
+          onChange={onInputChange}
           validateForm={validateForm}
           isEditMode={isEditMode}
           regax={
@@ -100,13 +126,25 @@ export function Profile({ profileData, handleSetIsLoggedIn, setUserData, resetSe
           advancedValidation={true}
           setIsButtonActive={setIsButtonActive}
         />
+
         {isEditMode ? (
-          <FormButton
-            buttonStyle="profile__save-button"
-            isButtonActive={isButtonActive}
-            onClick={handleModeSubmit}
-            buttonText="Сохранить"
-          />
+          <>
+            <span
+              className={`profile__req-status ${
+                reqStatus
+                  ? "profile__req-status_sucсess"
+                  : "profile__req-status_fail"
+              }`}
+            >
+              {reqStatusText}
+            </span>
+            <FormButton
+              buttonStyle="profile__save-button"
+              isButtonActive={isButtonActive}
+              onClick={handleModeSubmit}
+              buttonText="Сохранить"
+            />
+          </>
         ) : (
           <>
             <button

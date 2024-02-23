@@ -6,6 +6,7 @@ import accauntImgPink from "../images/headerLogo.svg";
 import accauntImg from "../images/headerLogoForAll.svg";
 import navBarIcon from "../images/menuNavBarIcon.svg";
 import exitButton from "../images/exit.svg";
+import deleteButton from "../images/deleteButton.svg";
 
 export const projectConstants = {
   headerData: {
@@ -76,6 +77,7 @@ export const projectConstants = {
     staticData: {
       saveButtonText: "Сохранить",
       savedImg: savedImg,
+      deleteIcon: deleteButton
     },
   },
   registerFormData: {

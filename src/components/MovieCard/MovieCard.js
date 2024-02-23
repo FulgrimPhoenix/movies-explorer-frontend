@@ -4,13 +4,9 @@ import "./MovieCard.css";
 import { useUrlPathName } from "../../hooks/useUrlPathName";
 import { projectConstants } from "../../utils/constants";
 
-export function MovieCard({
-  cardData,
-  myMoviesList,
-  setmyMoviesList,
-}) {
+export function MovieCard({ cardData, myMoviesList, setmyMoviesList }) {
   const currentPath = useUrlPathName();
-  const cellData = projectConstants.moviesData.staticData
+  const cellData = projectConstants.moviesData.staticData;
   const durationInHours = `${
     Math.floor(cardData.duration / 60) >= 1
       ? `${Math.floor(cardData.duration / 60)}ч`
@@ -50,7 +46,7 @@ export function MovieCard({
             api.getMyMovieList().then((res) => {
               setmyMoviesList(res);
               setIsLiked(checkForLike(res));
-              setIsLiked(false)
+              setIsLiked(false);
             });
           })
           .catch((err) => console.log(err));
@@ -64,7 +60,7 @@ export function MovieCard({
                 console.log(321, res);
                 setmyMoviesList(res);
                 setIsLiked(checkForLike(res));
-                setIsLiked(true)
+                setIsLiked(true);
               })
               .catch((err) => console.log(err));
           })
@@ -78,7 +74,7 @@ export function MovieCard({
             console.log(res);
             setmyMoviesList(res);
             setIsLiked(checkForLike(res));
-            setIsLiked(false)
+            setIsLiked(false);
           });
         })
         .catch((err) => console.log(err));
@@ -88,9 +84,20 @@ export function MovieCard({
   return (
     <li className="card">
       <div className="card__img-container">
-        <a className="card__link" href={cardData.trailerLink} target="blank"></a>
+        <a
+          className="card__link"
+          href={cardData.trailerLink}
+          target="blank"
+        ></a>
         <div className="card__status-container">
-          {isLiked || currentPath === "/saved-movies"? (
+          {currentPath === "/saved-movies" ? (
+            <img
+              onClick={toggleLikeMovie}
+              className="card__savedStatus"
+              src={cellData.deleteIcon}
+              alt="кнопка 'удалить'"
+            />
+          ) : isLiked ? (
             <img
               onClick={toggleLikeMovie}
               className="card__savedStatus"

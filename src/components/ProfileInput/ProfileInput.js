@@ -12,6 +12,7 @@ export function ProfileInput({
   regax,
   advancedValidation,
   setIsButtonActive,
+  disabled,
 }) {
   const { onChangee, isValid } = UseValidation({
     initialValue: { isValid: false, error: "" },

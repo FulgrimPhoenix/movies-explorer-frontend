@@ -23,14 +23,19 @@ import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute.js";
 import { moviesApi } from "../../utils/MoviesApi.js";
 
 function App() {
-  const [isLoggedIn, setisLoggedIn] = React.useState(false);
+  const [isLoggedIn, setisLoggedIn] = React.useState(
+    JSON.parse(localStorage.getItem("isLoggedIn"))
+  );
   const [isMenuPopupOpen, setIsMenuPopupOpen] = React.useState(false);
   const [userData, setUserData] = React.useState({});
   const [moviesList, setMoviesList] = React.useState([]);
   const [myMoviesList, setmyMoviesList] = React.useState([]);
-  const [searchResultAmongAllMovies, setSearchResultAmongAllMovies] = React.useState(JSON.parse(localStorage.getItem("moviesList")) || "")
-  const [searchResultAmongMyMovies, setSearchResultAmongMyMovies] = React.useState([]);
-  const [searchErrorResultText, setSearchErrorResultText] = React.useState("Ничего не найдено");
+  const [searchResultAmongAllMovies, setSearchResultAmongAllMovies] =
+    React.useState(JSON.parse(localStorage.getItem("moviesList")) || "");
+  const [searchResultAmongMyMovies, setSearchResultAmongMyMovies] =
+    React.useState([]);
+  const [searchErrorResultText, setSearchErrorResultText] =
+    React.useState("Введите свой запрос");
   const isProfilePage = useUrlPathName() === "/profile";
   const navigate = useNavigate();
 
@@ -41,16 +46,23 @@ function App() {
       api.getMyMovieList(),
     ])
       .then(([myData, moviesList, myMoviesList]) => {
+        console.log(123);
         setUserData(myData);
         setMoviesList(moviesList);
-        setSearchResultAmongAllMovies(moviesList);
+        setSearchResultAmongAllMovies(
+          JSON.parse(localStorage.getItem("moviesList")) || moviesList
+        );
         setmyMoviesList(myMoviesList);
         setSearchResultAmongMyMovies(myMoviesList);
         setisLoggedIn(true);
+        localStorage.setItem("isLoggedIn", JSON.stringify(true));
       })
       .catch((err) => {
-        setSearchErrorResultText("Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз")
+        setSearchErrorResultText(
+          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+        );
         setisLoggedIn(false);
+        localStorage.setItem("isLoggedIn", JSON.stringify(false));
         console.log(err);
       });
   }, [isLoggedIn]);
@@ -59,12 +71,16 @@ function App() {
     setisLoggedIn(!isLoggedIn);
   }
 
-  function resetSearch(){
+  function signOut() {
+    setisLoggedIn(false);
+  }
+
+  function resetSearch() {
     setSearchResultAmongAllMovies(moviesList);
     setSearchResultAmongMyMovies(myMoviesList);
   }
 
-  function updateMyMoviesList(newList){
+  function updateMyMoviesList(newList) {
     setSearchResultAmongMyMovies(newList);
   }
 
@@ -117,6 +133,7 @@ function App() {
                       moviesList={moviesList}
                       setCurrentMoviesList={setSearchResultAmongAllMovies}
                       name={"searchBar"}
+                      setSearchErrorResultText={setSearchErrorResultText}
                     />
                     <MovieCardList
                       moviesList={searchResultAmongAllMovies}
@@ -136,6 +153,7 @@ function App() {
                       moviesList={myMoviesList}
                       setCurrentMoviesList={setSearchResultAmongMyMovies}
                       name={"savedMoviesSearchBar"}
+                      setSearchErrorResultText={setSearchErrorResultText}
                     />
                     <MovieCardList
                       moviesList={searchResultAmongMyMovies}
@@ -150,6 +168,7 @@ function App() {
                 path="/profile"
                 element={
                   <Profile
+                    signOut={signOut}
                     profileData={projectConstants.profileData}
                     handleSetIsLoggedIn={handleSetIsLoggedIn}
                     setUserData={setUserData}
@@ -160,23 +179,30 @@ function App() {
             </Route>
           </Route>
           <Route
-            path="/signin"
+            path="/"
             element={
-              <Login
-                loginFormData={projectConstants.loginFormData}
-                handleSetIsLoggedIn={handleSetIsLoggedIn}
-              />
+              <ProtectedRoute isLoggedIn={!isLoggedIn} redirectPath="/" />
             }
-          ></Route>
-          <Route
-            path="/signup"
-            element={
-              <Register
-                registerFormData={projectConstants.registerFormData}
-                handleSetIsLoggedIn={handleSetIsLoggedIn}
-              />
-            }
-          ></Route>
+          >
+            <Route
+              path="/signin"
+              element={
+                <Login
+                  loginFormData={projectConstants.loginFormData}
+                  handleSetIsLoggedIn={handleSetIsLoggedIn}
+                />
+              }
+            ></Route>
+            <Route
+              path="/signup"
+              element={
+                <Register
+                  registerFormData={projectConstants.registerFormData}
+                  handleSetIsLoggedIn={handleSetIsLoggedIn}
+                />
+              }
+            ></Route>
+          </Route>
           <Route
             path="*"
             element={

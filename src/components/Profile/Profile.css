@@ -6,7 +6,7 @@
 .profile__title {
   margin: 74px auto 0;
   color: rgb(0, 0, 0);
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: "Inter", Arial, sans-serif;
   font-size: 24px;
   font-weight: 500;
   line-height: 29px;
@@ -19,6 +19,7 @@
   width: 410px;
   display: flex;
   flex-direction: column;
+  min-height: 342px;
 }
 
 .profile__input-cell {
@@ -45,7 +46,7 @@
   border: none;
   background: none;
   color: rgb(0, 0, 0);
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: "Inter", Arial, sans-serif;
   font-size: 11px;
   font-weight: 400;
   line-height: 13px;
@@ -66,7 +67,7 @@
 .profile__input-title {
   margin: 0;
   color: rgb(0, 0, 0);
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: "Inter", Arial, sans-serif;
   font-size: 11px;
   font-weight: 500;
   line-height: 13px;
@@ -82,7 +83,7 @@
   display: block;
   cursor: pointer;
   color: rgb(0, 0, 0);
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: "Inter", Arial, sans-serif;
   font-size: 13px;
   font-weight: 400;
   line-height: 16px;
@@ -103,7 +104,7 @@
   display: block;
   cursor: pointer;
   color: rgb(255, 0, 77);
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: "Inter", Arial, sans-serif;
   font-size: 13px;
   font-weight: 500;
   line-height: 16px;
@@ -116,8 +117,27 @@
   opacity: 0.7;
 }
 
+.profile__req-status {
+  margin: auto auto 0;
+  font-family: Inter;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 13px;
+  letter-spacing: 0px;
+  text-align: center;
+  animation: vanish 3s linear 3s backwards;
+}
+
+.profile__req-status_sucсess {
+  color: rgb(0, 158, 47);
+}
+
+.profile__req-status_fail {
+  color: rgb(255, 0, 76);
+}
+
 .profile__save-button {
-  margin: 223px auto 0;
+  margin: 15px auto 0;
   display: block;
   opacity: 1;
   width: 100%;
@@ -125,58 +145,67 @@
   border-radius: 3px;
   border: none;
   background: #000;
-  transition: opacity .2s linear;
+  transition: opacity 0.2s linear;
   cursor: pointer;
   color: #fff;
 }
 
-.profile__save-button:disabled{
+.profile__save-button:disabled {
   background-color: #f8f8f8;
   color: #c2c2c2;
   cursor: default;
   opacity: 1;
 }
 
-
 .profile__save-button:hover {
-  opacity: .7;
+  opacity: 0.7;
 }
 
 @media screen and (max-width: 969px) {
-  .profile__title{
+  .profile__title {
     margin: 236px auto 0;
   }
-  .profile__form{
+  .profile__form {
     margin: 96px auto auto;
   }
-  .profile__edit-button{
+  .profile__edit-button {
     margin: 190px auto 0;
   }
-  .profile__save-button{
+  .profile__save-button {
     margin: 190px auto 0;
   }
 }
 
 @media screen and (max-width: 700px) {
-  .profile{
+  .profile {
     padding: 0 30px;
   }
-  .profile__title{
+  .profile__title {
     margin: 70px auto 0;
   }
-  .profile__form{
+  .profile__form {
     margin: 80px auto auto;
     width: 100%;
   }
-  .profile__edit-button{
+  .profile__edit-button {
     margin: 361px auto 0;
     letter-spacing: -0.4px;
   }
-  .profile__logout-button{
+  .profile__logout-button {
     margin: 13px auto 0;
     letter-spacing: -0.5px;
   }
-  .profile__save-button{
+  .profile__save-button {
     margin: 361px auto 0;
+  }
+}
+
+@keyframes vanish {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
   }
 }

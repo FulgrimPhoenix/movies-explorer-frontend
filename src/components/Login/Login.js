@@ -40,6 +40,7 @@ export function Login({ loginFormData, handleSetIsLoggedIn }) {
         if (res.status === 200) {
           setServerError("");
           handleSetIsLoggedIn();
+          localStorage.setItem('isLoggedIn', JSON.stringify(true));
           return navigate("/movies", { replace: true });
         } else if (res.status === 401) {
           throw new Error("Неверный логин или пароль");
