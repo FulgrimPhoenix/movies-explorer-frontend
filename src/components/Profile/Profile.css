@@ -125,7 +125,7 @@
   line-height: 13px;
   letter-spacing: 0px;
   text-align: center;
-  animation: vanish 3s linear 3s backwards;
+  /* animation: vanish 3s linear 3s backwards; */
 }
 
 .profile__req-status_sucсess {

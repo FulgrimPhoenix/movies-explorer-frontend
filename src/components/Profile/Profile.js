@@ -64,8 +64,8 @@ export function Profile({
       .catch((err) => console.log(err));
   }
 
-  function handleModeSubmit(field) {
-    setMode(!isEditMode);
+  function handleModeSubmit(value) {
+    setMode(value);
   }
 
   function validateForm(name, value) {
@@ -141,7 +141,7 @@ export function Profile({
             <FormButton
               buttonStyle="profile__save-button"
               isButtonActive={isButtonActive}
-              onClick={handleModeSubmit}
+              onClick={() => handleModeSubmit(false)}
               buttonText="Сохранить"
             />
           </>
@@ -149,7 +149,7 @@ export function Profile({
           <>
             <button
               type="button"
-              onClick={() => handleModeSubmit()}
+              onClick={() => handleModeSubmit(true)}
               className="profile__edit-button"
             >
               Редактировать

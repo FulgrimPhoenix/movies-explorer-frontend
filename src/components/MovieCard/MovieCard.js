@@ -7,11 +7,10 @@ import { projectConstants } from "../../utils/constants";
 export function MovieCard({ cardData, myMoviesList, setmyMoviesList }) {
   const currentPath = useUrlPathName();
   const cellData = projectConstants.moviesData.staticData;
-  const durationInHours = `${
-    Math.floor(cardData.duration / 60) >= 1
-      ? `${Math.floor(cardData.duration / 60)}ч`
-      : ""
-  } ${cardData.duration % 60 === 0 ? "" : `${cardData.duration % 60}м`}`;
+  const durationInHours = `${Math.floor(cardData.duration / 60) >= 1
+    ? `${Math.floor(cardData.duration / 60)}ч`
+    : ""
+    } ${cardData.duration % 60 === 0 ? "" : `${cardData.duration % 60}м`}`;
   const currentCardData = {
     country: cardData.country,
     director: cardData.director,
@@ -34,65 +33,51 @@ export function MovieCard({ cardData, myMoviesList, setmyMoviesList }) {
     });
   }
 
+  function dislikeMovie(movie) {
+    setmyMoviesList(myMoviesList.filter(movieFromList => movieFromList.movieId !== movie.movieId));
+    console.log(myMoviesList);
+  }
+
   function toggleLikeMovie() {
-    if (currentPath === "/movies") {
-      if (isLiked) {
-        console.log(myMoviesList);
-        api
-          .unLikeThisMovie(
-            myMoviesList.find((movie) => movie.movieId === cardData.id)._id
-          )
-          .then(() => {
-            api.getMyMovieList().then((res) => {
-              setmyMoviesList(res);
-              setIsLiked(checkForLike(res));
-              setIsLiked(false);
-            });
-          })
-          .catch((err) => console.log(err));
-      } else {
-        api
-          .likeThisMovie(currentCardData)
-          .then(() => {
-            api
-              .getMyMovieList()
-              .then((res) => {
-                console.log(321, res);
-                setmyMoviesList(res);
-                setIsLiked(checkForLike(res));
-                setIsLiked(true);
-              })
-              .catch((err) => console.log(err));
-          })
-          .catch((err) => console.log(err));
-      }
-    } else if (currentPath === "/saved-movies") {
+    if (isLiked) {
       api
-        .unLikeThisMovie(cardData._id)
-        .then(() => {
-          api.getMyMovieList().then((res) => {
-            console.log(res);
-            setmyMoviesList(res);
-            setIsLiked(checkForLike(res));
-            setIsLiked(false);
-          });
+        .unLikeThisMovie(
+          myMoviesList.find((movie) => movie.movieId === cardData.id)._id
+        )
+        .then((res) => {
+          dislikeMovie(res);
+          setIsLiked(false)
+        })
+        .catch((err) => console.log(err));
+    } else {
+      api
+        .likeThisMovie(currentCardData)
+        .then((res) => {
+          setmyMoviesList([...myMoviesList, res]);
+          setIsLiked(true);
         })
         .catch((err) => console.log(err));
     }
   }
 
+
   return (
     <li className="card">
       <div className="card__img-container">
-        <a
+        {/* <a
           className="card__link"
           href={cardData.trailerLink}
           target="blank"
-        ></a>
+        ></a> */}
         <div className="card__status-container">
           {currentPath === "/saved-movies" ? (
             <img
-              onClick={toggleLikeMovie}
+              onClick={() => {
+                console.log(cardData._id);
+                api.unLikeThisMovie(
+                  myMoviesList.find((movie) => movie.movieId === cardData.movieId)._id
+                ).then((res) => dislikeMovie(res))
+              }}
               className="card__savedStatus"
               src={cellData.deleteIcon}
               alt="кнопка 'удалить'"
@@ -113,11 +98,10 @@ export function MovieCard({ cardData, myMoviesList, setmyMoviesList }) {
         <picture>
           <img
             className="card__img"
-            src={`${
-              cardData.image.url
-                ? `https://api.nomoreparties.co${cardData.image.url}`
-                : `${cardData.image}`
-            }`}
+            src={`${cardData.image.url
+              ? `https://api.nomoreparties.co${cardData.image.url}`
+              : `${cardData.image}`
+              }`}
             alt={cardData.title}
           />
         </picture>

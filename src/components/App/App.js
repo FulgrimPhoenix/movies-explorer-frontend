@@ -35,7 +35,7 @@ function App() {
   const [searchResultAmongMyMovies, setSearchResultAmongMyMovies] =
     React.useState([]);
   const [searchErrorResultText, setSearchErrorResultText] =
-    React.useState("Введите свой запрос");
+    React.useState("Вы не сохранили ни одного фильма");
   const isProfilePage = useUrlPathName() === "/profile";
   const navigate = useNavigate();
 
@@ -53,6 +53,7 @@ function App() {
           JSON.parse(localStorage.getItem("moviesList")) || moviesList
         );
         setmyMoviesList(myMoviesList);
+        console.log(myMoviesList);
         setSearchResultAmongMyMovies(myMoviesList);
         setisLoggedIn(true);
         localStorage.setItem("isLoggedIn", JSON.stringify(true));
@@ -81,11 +82,13 @@ function App() {
   }
 
   function updateMyMoviesList(newList) {
+    setmyMoviesList(newList)
     setSearchResultAmongMyMovies(newList);
+    console.log(newList);
   }
 
   function goBack() {
-    navigate("../", { replace: false });
+    navigate(-1, { replace: false });
   }
 
   function handleTogglePopup() {

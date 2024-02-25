@@ -13,7 +13,7 @@ export function MovieCardList({
   const currentWidth = useWindowSize();
   const currentPath = useUrlPathName();
 
-  const [cardListLength, setCardListLength] = useState(currentPath === "/saved-movies" ? moviesList.length : () => {
+  const [cardListLength, setCardListLength] = useState(() => {
     if (currentWidth > 1077) {
       return 12
     } else if (currentWidth > 767) {
@@ -24,20 +24,16 @@ export function MovieCardList({
   })
 
   useEffect(() => {
-    if (currentPath === "/saved-movies") {
-      setCardListLength(moviesList.length);
-    } else {
-      setCardListLength(() => {
-        if (currentWidth > 1077) {
-          return 12
-        } else if (currentWidth > 767) {
-          return 8
-        } else {
-          return 5
-        }
-      })
-    }
-  }, [currentPath])
+    setCardListLength(() => {
+      if (currentWidth > 1077) {
+        return 12
+      } else if (currentWidth > 767) {
+        return 8
+      } else {
+        return 5
+      }
+    })
+  }, [currentPath]);
 
   function showCards(cardList, cardListLength) {
     const currentList = cardList.slice(0, cardListLength)
@@ -56,7 +52,14 @@ export function MovieCardList({
       {moviesList && moviesList.length !== 0 ? (
         <>
           <ul className="movie-card-list__grid">
-            {showCards(moviesList, cardListLength)}
+            {currentPath === "/saved-movies" ? moviesList.map((movie) =>
+              <MovieCard
+                key={movie.nameEN}
+                myMoviesList={myMoviesList}
+                setmyMoviesList={setmyMoviesList}
+                cardData={movie}
+              />
+            ) : showCards(moviesList, cardListLength)}
           </ul>
           <button
             className={`${cardListLength >= moviesList.length ||
