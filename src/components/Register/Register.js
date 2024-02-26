@@ -16,6 +16,7 @@ export function Register({ registerFormData, handleSetIsLoggedIn }) {
     password: false,
   });
   const [isButtonActive, setIsButtonActive] = useState(false);
+  const [isFormActive, setIsFormActive] = useState(true);
   const [serverError, setServerError] = useState("");
   const currentPath = useUrlPathName();
   const navigate = useNavigate();
@@ -40,9 +41,11 @@ export function Register({ registerFormData, handleSetIsLoggedIn }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    setIsFormActive(false);
     api
       .signup(values)
       .then((res) => {
+        setIsFormActive(true);
         if (res.status === 201) {
           setServerError("");
           api
@@ -63,6 +66,7 @@ export function Register({ registerFormData, handleSetIsLoggedIn }) {
         }
       })
       .catch((err) => {
+        setIsFormActive(true);
         setServerError(err.message);
       });
   }
@@ -75,6 +79,7 @@ export function Register({ registerFormData, handleSetIsLoggedIn }) {
         redirectLink={"/movies"}
         onSubmit={handleSubmit}
         serverErrorMessage={serverError}
+        isFormActive={isFormActive}
       >
         <LogRegInput
           name="name"
@@ -88,6 +93,7 @@ export function Register({ registerFormData, handleSetIsLoggedIn }) {
           placeholder={"Илья"}
           regax={/[^a-zа-я\sё-]/gi}
           advancedValidation={true}
+          isFormActive={isFormActive}
         />
         <LogRegInput
           name="email"
@@ -103,6 +109,7 @@ export function Register({ registerFormData, handleSetIsLoggedIn }) {
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i
           }
           advancedValidation={true}
+          isFormActive={isFormActive}
         />
         <LogRegInput
           name="password"
@@ -116,6 +123,7 @@ export function Register({ registerFormData, handleSetIsLoggedIn }) {
           placeholder={"Strong8Password!"}
           regax={null}
           advancedValidation={false}
+          isFormActive={isFormActive}
         />
       </LogRegForm>
       <p className="register__redirect-line">

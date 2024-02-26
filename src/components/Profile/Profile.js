@@ -21,7 +21,7 @@ export function Profile({
   });
   const [isEditMode, setMode] = useState(false);
   const [isButtonActive, setIsButtonActive] = useState(true);
-  const [isInputActive, setIsInputActive] = useState(true);
+  const [isFormActive, setIsFormActive] = useState(true);
   const [reqStatus, setReqStatus] = useState(true);
   const [reqStatusText, setReqStatusText] = useState("");
   const userData = useContext(CurrentUserContext);
@@ -78,21 +78,22 @@ export function Profile({
   }
 
   function updateMyInfo(e, newValue) {
-    setIsButtonActive(false);
+    // setIsButtonActive(false);
     e.preventDefault();
+    setIsFormActive(false);
     api
       .updateProfileInfo(newValue)
       .then((res) => {
+        setIsFormActive(true);
         setUserData(res);
-        setIsButtonActive(true);
         setReqStatusText("Данные успешно обновлены");
         setReqStatus(true)
       })
       .catch((err) => {
+        setIsFormActive(true);
         console.log(err);
-        setReqStatusText(`Произошла ошибкаЖ ${err.message}`);
+        setReqStatusText(`Произошла ошибка: ${err.message}`);
         setReqStatus(false)
-        setIsButtonActive(true);
       });
   }
 
@@ -110,7 +111,7 @@ export function Profile({
           isEditMode={isEditMode}
           regax={/[^a-zа-я\sё-]/gi}
           advancedValidation={true}
-          setIsButtonActive={setIsButtonActive}
+          isFormActive={isFormActive}
         />
         <ProfileInput
           name={"email"}
@@ -124,7 +125,7 @@ export function Profile({
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i
           }
           advancedValidation={true}
-          setIsButtonActive={setIsButtonActive}
+          isFormActive={isFormActive}
         />
 
         {isEditMode ? (
@@ -143,6 +144,7 @@ export function Profile({
               isButtonActive={isButtonActive}
               onClick={() => handleModeSubmit(false)}
               buttonText="Сохранить"
+              isFormActive={isFormActive}
             />
           </>
         ) : (

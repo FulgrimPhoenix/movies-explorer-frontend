@@ -1,15 +1,16 @@
-export function FormButton({buttonStyle, isButtonActive, onClick, buttonText}){
-  return(
+export function FormButton({ buttonStyle, isButtonActive, onClick, buttonText, isFormActive }) {
+  return (
     isButtonActive ? (
       <button
-      type="submit"
+        type="submit"
         className={`${buttonStyle}`}
+        disabled={(isFormActive) ? "" : "disabled"}
       >
         {buttonText}
       </button>
     ) : (
       <button
-      type="submit"
+        type="submit"
         className={`${buttonStyle}`}
         disabled
       >

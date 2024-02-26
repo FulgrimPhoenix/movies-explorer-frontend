@@ -14,6 +14,17 @@ export const projectConstants = {
     accauntImg: accauntImg,
     logo: logo,
     navBarIcon: navBarIcon,
+    registerButton: "Регистация",
+    signInButton: "Войти",
+    moviesButton: "Фильмы",
+    savedMoviesButton: "Сохраненные фильмы",
+    profileButton: "Аккаунт"
+  },
+  mainData: {
+    title: "Учебный проект студента факультета Веб-разработки.",
+    aboutProjectSubtitle: "О проекте",
+    techsSubtitle: "Технологии",
+    aboutMeSubtitle: "Студент"
   },
   aboutProjectData: [
     {

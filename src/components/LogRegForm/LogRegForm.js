@@ -6,15 +6,10 @@ export function LogRegForm({
   children,
   formData,
   isButtonActive,
-  redirectLink,
   onSubmit,
-  serverErrorMessage
+  serverErrorMessage,
+  isFormActive
 }) {
-
-  function onClick(e) {
-    e.preventDefault();
-    console.log("меня нажали");
-  }
 
   return (
     <form onSubmit={onSubmit} className="log-reg-form" noValidate>
@@ -29,8 +24,8 @@ export function LogRegForm({
       <FormButton
         buttonStyle="log-reg-form__button"
         isButtonActive={isButtonActive}
-        onClick={onClick}
         buttonText={formData.buttonText}
+        isFormActive={isFormActive}
       />
     </form>
   );

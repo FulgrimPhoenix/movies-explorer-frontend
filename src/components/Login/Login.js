@@ -11,6 +11,7 @@ export function Login({ loginFormData, handleSetIsLoggedIn }) {
   const { values, onChange, setValues } = useForm({});
   const [isValid, setIsValid] = useState({ email: false, password: false });
   const [isButtonActive, setIsButtonActive] = useState(false);
+  const [isFormActive, setIsFormActive] = useState(true);
   const [serverError, setServerError] = useState("");
   const navigate = useNavigate();
 
@@ -34,10 +35,12 @@ export function Login({ loginFormData, handleSetIsLoggedIn }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    setIsFormActive(false);
     api
       .signin(values)
       .then((res, req) => {
         if (res.status === 200) {
+          setIsFormActive(true);
           setServerError("");
           handleSetIsLoggedIn();
           localStorage.setItem('isLoggedIn', JSON.stringify(true));
@@ -51,6 +54,7 @@ export function Login({ loginFormData, handleSetIsLoggedIn }) {
         }
       })
       .catch((err) => {
+        setIsFormActive(true);
         setServerError(err.message);
       });
   }
@@ -63,6 +67,7 @@ export function Login({ loginFormData, handleSetIsLoggedIn }) {
         redirectLink={"/movies"}
         onSubmit={handleSubmit}
         serverErrorMessage={serverError}
+        isFormActive={isFormActive}
       >
         <LogRegInput
           name="email"
@@ -78,6 +83,7 @@ export function Login({ loginFormData, handleSetIsLoggedIn }) {
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i
           }
           advancedValidation={true}
+          isFormActive={isFormActive}
         />
         <LogRegInput
           name="password"
@@ -91,6 +97,7 @@ export function Login({ loginFormData, handleSetIsLoggedIn }) {
           placeholder={"Strong8Password!"}
           regax={null}
           advancedValidation={false}
+          isFormActive={isFormActive}
         />
       </LogRegForm>
       <p className="login__redirect-line">

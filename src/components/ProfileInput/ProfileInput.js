@@ -11,8 +11,7 @@ export function ProfileInput({
   profileData,
   regax,
   advancedValidation,
-  setIsButtonActive,
-  disabled,
+  isFormActive
 }) {
   const { onChangee, isValid } = UseValidation({
     initialValue: { isValid: false, error: "" },
@@ -41,6 +40,7 @@ export function ProfileInput({
           type="text"
           minLength={2}
           maxLength={18}
+          disabled = {(isFormActive)? "" : "disabled"}
         />
       ) : (
         <p className="profile__input">{profileData}</p>

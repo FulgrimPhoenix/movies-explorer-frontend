@@ -14,8 +14,9 @@ export function LogRegInput({
   validateForm,
   regax,
   advancedValidation,
+  isFormActive
 }) {
-  const { validationResult, onChangee, isValid, setIsValid } = UseValidation({
+  const { validationResult, onChangee, isValid } = UseValidation({
     initialValue: { isValid: false, error: "" },
     regax: regax,
     advancedValidation: advancedValidation,
@@ -37,13 +38,13 @@ export function LogRegInput({
         name={name}
         className="log-reg-input__input"
         onChange={(e) => onInputChange(e)}
-        // onInput={(e) => onInputChange(e)}
         value={value || ""}
         type={inputType}
         minLength={minLength}
         maxLength={maxLength}
         placeholder={placeholder}
         autoComplete="new-password"
+        disabled = {(isFormActive)? "" : "disabled"}
       />
       <span
         className={`log-reg-input__error-message ${

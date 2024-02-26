@@ -35,7 +35,6 @@ export function MovieCard({ cardData, myMoviesList, setmyMoviesList }) {
 
   function dislikeMovie(movie) {
     setmyMoviesList(myMoviesList.filter(movieFromList => movieFromList.movieId !== movie.movieId));
-    console.log(myMoviesList);
   }
 
   function toggleLikeMovie() {
@@ -73,7 +72,6 @@ export function MovieCard({ cardData, myMoviesList, setmyMoviesList }) {
           {currentPath === "/saved-movies" ? (
             <img
               onClick={() => {
-                console.log(cardData._id);
                 api.unLikeThisMovie(
                   myMoviesList.find((movie) => movie.movieId === cardData.movieId)._id
                 ).then((res) => dislikeMovie(res))

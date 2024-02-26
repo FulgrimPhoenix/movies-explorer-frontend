@@ -165,14 +165,21 @@
   .profile__title {
     margin: 236px auto 0;
   }
+
   .profile__form {
     margin: 96px auto auto;
   }
+
   .profile__edit-button {
     margin: 190px auto 0;
   }
+
+  .profile__req-status {
+    margin: auto auto 0;
+  }
+
   .profile__save-button {
-    margin: 190px auto 0;
+    margin: 15px auto 0;
   }
 }
 
@@ -180,23 +187,32 @@
   .profile {
     padding: 0 30px;
   }
+
   .profile__title {
     margin: 70px auto 0;
   }
+
   .profile__form {
     margin: 80px auto auto;
     width: 100%;
   }
+
   .profile__edit-button {
     margin: 361px auto 0;
     letter-spacing: -0.4px;
   }
+
   .profile__logout-button {
     margin: 13px auto 0;
     letter-spacing: -0.5px;
   }
+
+  .profile__req-status {
+    margin: auto auto 0;
+  }
+
   .profile__save-button {
-    margin: 361px auto 0;
+    margin: 15px auto 0;
   }
 }
 

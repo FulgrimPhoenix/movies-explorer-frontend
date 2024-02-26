@@ -46,14 +46,12 @@ function App() {
       api.getMyMovieList(),
     ])
       .then(([myData, moviesList, myMoviesList]) => {
-        console.log(123);
         setUserData(myData);
         setMoviesList(moviesList);
         setSearchResultAmongAllMovies(
           JSON.parse(localStorage.getItem("moviesList")) || moviesList
         );
         setmyMoviesList(myMoviesList);
-        console.log(myMoviesList);
         setSearchResultAmongMyMovies(myMoviesList);
         setisLoggedIn(true);
         localStorage.setItem("isLoggedIn", JSON.stringify(true));
@@ -84,7 +82,6 @@ function App() {
   function updateMyMoviesList(newList) {
     setmyMoviesList(newList)
     setSearchResultAmongMyMovies(newList);
-    console.log(newList);
   }
 
   function goBack() {
