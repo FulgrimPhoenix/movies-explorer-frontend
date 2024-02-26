@@ -105,5 +105,3 @@ class Api {
 }
 
 export const api = new Api({ apiUrl: "https://api.mymovie.nomoredomainsmonster.ru/" });
-
-// https://api.mymovie.nomoredomainsmonster.ru/   http://localhost:3001/
