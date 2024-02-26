@@ -88,7 +88,7 @@ export function SearchForm({
                   ? values["searchBar"]
                   : values["savedMoviesSearchBar"]
               )
-            } /*onSubmit={formUtils.onSubmit}*/
+            }
           >
             {formSearchUtils.button_text}
           </button>
@@ -145,7 +145,7 @@ export function SearchForm({
                     ? values["searchBar"]
                     : values["savedMoviesSearchBar"]
                 )
-              } /*onSubmit={formUtils.onSubmit}*/
+              }
             >
               {formSearchUtils.button_text}
             </button>

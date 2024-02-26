@@ -37,7 +37,15 @@ export const projectConstants = {
       description:
         "У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.",
     },
+    
   ],
+  aboutProjectTimelineData: {
+    sectionTitle: "О проекте",
+    firstTimeline: "1 неделя",
+    firstTimelineText: "Back-end",
+    secondTimeline: "4 недели",
+    secondTimelineText: "Front-end",
+  },
   techsData: {
     title: "7 технологий",
     description:

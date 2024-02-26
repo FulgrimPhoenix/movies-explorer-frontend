@@ -63,11 +63,11 @@ export function MovieCard({ cardData, myMoviesList, setmyMoviesList }) {
   return (
     <li className="card">
       <div className="card__img-container">
-        {/* <a
+        <a
           className="card__link"
           href={cardData.trailerLink}
           target="blank"
-        ></a> */}
+        ></a>
         <div className="card__status-container">
           {currentPath === "/saved-movies" ? (
             <img

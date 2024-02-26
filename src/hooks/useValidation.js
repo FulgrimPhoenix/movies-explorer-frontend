@@ -1,15 +1,11 @@
-/* eslint-disable default-case */
-import { useEffect, useState } from "react";
+
+import { useState } from "react";
 
 export const UseValidation = ({ initialValue, regax, advancedValidation }) => {
   const [isValid, setIsValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [validationResult, setValidationResult] = useState(initialValue);
 
-  useEffect(() => {
-
-  }, [isValid, errorMessage]);
-  // Redesign the logic for email validation and develop a new regExp for email
   function inputAdvancedValidation(e) {
     const inputValue = e.target.value;
     if (e.target.name === "email") {

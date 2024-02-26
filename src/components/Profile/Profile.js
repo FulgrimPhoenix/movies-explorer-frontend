@@ -78,7 +78,6 @@ export function Profile({
   }
 
   function updateMyInfo(e, newValue) {
-    // setIsButtonActive(false);
     e.preventDefault();
     setIsFormActive(false);
     api
