@@ -3,6 +3,7 @@ import { useWindowSize } from "../../hooks/useWindowSize";
 import { useForm } from "../../hooks/useForm";
 import { useState } from "react";
 import { useUrlPathName } from "../../hooks/useUrlPathName";
+import { projectConstants } from "../../utils/constants";
 
 export function SearchForm({
   formSearchUtils,
@@ -43,12 +44,12 @@ export function SearchForm({
       localStorage.setItem("moviesList", JSON.stringify(searchResult));
       setCurrentMoviesList(searchResult);
       searchResult.length === 0
-        ? setSearchErrorResultText("По вашему запросу ничего не найдено")
+        ? setSearchErrorResultText(projectConstants.messages.noOneMoviesFinded)
         : setSearchErrorResultText("");
     } else {
       setCurrentMoviesList(searchResult);
       searchResult.length === 0
-        ? setSearchErrorResultText("По вашему запросу ничего не найдено")
+        ? setSearchErrorResultText(projectConstants.messages.noOneMoviesFinded)
         : setSearchErrorResultText("");
     }
   }

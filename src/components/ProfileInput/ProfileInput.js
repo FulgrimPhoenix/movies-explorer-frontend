@@ -35,7 +35,7 @@ export function ProfileInput({
         <input
           className="profile__input profile__input_active"
           name={name}
-          value={value || ""}
+          value={value || profileData}
           onChange={(e) => onInputChange(e)}
           type="text"
           minLength={2}

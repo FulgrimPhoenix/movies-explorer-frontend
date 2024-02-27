@@ -18,13 +18,13 @@ export const projectConstants = {
     signInButton: "Войти",
     moviesButton: "Фильмы",
     savedMoviesButton: "Сохраненные фильмы",
-    profileButton: "Аккаунт"
+    profileButton: "Аккаунт",
   },
   mainData: {
     title: "Учебный проект студента факультета Веб-разработки.",
     aboutProjectSubtitle: "О проекте",
     techsSubtitle: "Технологии",
-    aboutMeSubtitle: "Студент"
+    aboutMeSubtitle: "Студент",
   },
   aboutProjectData: [
     {
@@ -37,7 +37,6 @@ export const projectConstants = {
       description:
         "У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.",
     },
-    
   ],
   aboutProjectTimelineData: {
     sectionTitle: "О проекте",
@@ -96,7 +95,7 @@ export const projectConstants = {
     staticData: {
       saveButtonText: "Сохранить",
       savedImg: savedImg,
-      deleteIcon: deleteButton
+      deleteIcon: deleteButton,
     },
   },
   registerFormData: {
@@ -119,6 +118,9 @@ export const projectConstants = {
     title: (name) => {
       return `Привет, ${name}!`;
     },
+    editButtonText: "Редактировать",
+    exitButtonText: "Выйти из аккаунта",
+    saveButtonText: "Сохранить"
   },
   popupData: {
     exitButton: exitButton,
@@ -128,5 +130,13 @@ export const projectConstants = {
     title: "404",
     subTitle: "Страница не найдена",
     buttonText: "Назад",
+  },
+  messages: {
+    noOneMoviesFinded: "По вашему запросу ничего не найдено",
+    noOneMoviesSaved: "Вы не сохранили ни одного фильма",
+    reqError:
+      "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз",
+    profileDataWasUpdated: "Данные успешно обновлены",
+    profileDataUpdateError: "Произошла ошибка:"
   },
 };

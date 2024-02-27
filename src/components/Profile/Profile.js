@@ -6,6 +6,7 @@ import { ProfileInput } from "../ProfileInput/ProfileInput";
 import { FormButton } from "../FormButton/FormButton";
 import { api } from "../../utils/MainApi";
 import { useNavigate } from "react-router-dom";
+import { projectConstants } from "../../utils/constants";
 
 export function Profile({
   profileData,
@@ -14,7 +15,8 @@ export function Profile({
   resetSearch,
   signOut
 }) {
-  const { values, onChange, setValues } = useForm({});
+  const userData = useContext(CurrentUserContext);
+  const { values, onChange, setValues } = useForm({email: userData.email, name: userData.name});
   const [isValid, setIsValid] = useState({
     name: false,
     email: true,
@@ -24,27 +26,25 @@ export function Profile({
   const [isFormActive, setIsFormActive] = useState(true);
   const [reqStatus, setReqStatus] = useState(true);
   const [reqStatusText, setReqStatusText] = useState("");
-  const userData = useContext(CurrentUserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     setIsValid({
-      name: false,
+      name: true,
       email: true,
     });
-    setValues({ name: userData.name, email: userData.email });
     setIsButtonActive(false);
   }, []);
 
   useEffect(() => {
     if (Object.values(isValid).every((item) => item)) {
       if (
-        values["name"] === userData.name &&
-        values["email"] === userData.email
+        values["name"] !== userData.name ||
+        values["email"] !== userData.email
       ) {
-        setIsButtonActive(false);
-      } else {
         setIsButtonActive(true);
+      } else {
+        setIsButtonActive(false);
       }
     } else {
       setIsButtonActive(false);
@@ -65,6 +65,7 @@ export function Profile({
   }
 
   function handleModeSubmit(value) {
+    setValues({email: userData.email, name: userData.name});
     setMode(value);
   }
 
@@ -85,13 +86,13 @@ export function Profile({
       .then((res) => {
         setIsFormActive(true);
         setUserData(res);
-        setReqStatusText("Данные успешно обновлены");
+        setReqStatusText(projectConstants.messages.profileDataWasUpdated);
         setReqStatus(true)
       })
       .catch((err) => {
         setIsFormActive(true);
         console.log(err);
-        setReqStatusText(`Произошла ошибка: ${err.message}`);
+        setReqStatusText(`${projectConstants.messages.profileDataUpdateError} ${err.message}`);
         setReqStatus(false)
       });
   }
@@ -142,7 +143,7 @@ export function Profile({
               buttonStyle="profile__save-button"
               isButtonActive={isButtonActive}
               onClick={() => handleModeSubmit(false)}
-              buttonText="Сохранить"
+              buttonText={profileData.saveButtonText}
               isFormActive={isFormActive}
             />
           </>
@@ -153,14 +154,14 @@ export function Profile({
               onClick={() => handleModeSubmit(true)}
               className="profile__edit-button"
             >
-              Редактировать
+              {profileData.editButtonText}
             </button>
             <button
               type="button"
               onClick={signout}
               className="profile__logout-button"
             >
-              Выйти из аккаунта
+              {profileData.exitButtonText}
             </button>
           </>
         )}

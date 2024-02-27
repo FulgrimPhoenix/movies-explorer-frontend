@@ -35,7 +35,7 @@ function App() {
   const [searchResultAmongMyMovies, setSearchResultAmongMyMovies] =
     React.useState([]);
   const [searchErrorResultText, setSearchErrorResultText] =
-    React.useState("Вы не сохранили ни одного фильма");
+    React.useState(projectConstants.messages.noOneMoviesSaved);
   const isProfilePage = useUrlPathName() === "/profile";
   const navigate = useNavigate();
 
@@ -58,7 +58,7 @@ function App() {
       })
       .catch((err) => {
         setSearchErrorResultText(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
+          projectConstants.messages.reqError
         );
         setisLoggedIn(false);
         localStorage.setItem("isLoggedIn", JSON.stringify(false));
