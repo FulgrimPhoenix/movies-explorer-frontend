@@ -18,7 +18,7 @@ export function Profile({
   const userData = useContext(CurrentUserContext);
   const { values, onChange, setValues } = useForm({email: userData.email, name: userData.name});
   const [isValid, setIsValid] = useState({
-    name: false,
+    name: true,
     email: true,
   });
   const [isEditMode, setMode] = useState(false);
