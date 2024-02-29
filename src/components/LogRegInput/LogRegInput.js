@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./LogRegInput.css";
+import { UseValidation } from "../../hooks/useValidation";
 
 export function LogRegInput({
   title,
@@ -9,14 +10,25 @@ export function LogRegInput({
   onChange,
   value,
   name,
-  placeholder
+  placeholder,
+  validateForm,
+  regax,
+  advancedValidation,
+  isFormActive
 }) {
-  const [isValid, setIsValid] = React.useState(true);
-  const [errorMessage, setErrorMessage] = React.useState("");
+  const { validationResult, onChangee, isValid } = UseValidation({
+    initialValue: { isValid: false, error: "" },
+    regax: regax,
+    advancedValidation: advancedValidation,
+  });
 
-  function checkForValid(e) {
-    setIsValid(e.target.validity.valid);
-    setErrorMessage(e.target.validationMessage);
+  useEffect(() => {
+    validateForm(name, isValid);
+  }, [isValid]);
+
+  function onInputChange(e) {
+    onChange(e);
+    onChangee(e);
   }
 
   return (
@@ -25,20 +37,21 @@ export function LogRegInput({
       <input
         name={name}
         className="log-reg-input__input"
-        onChange={onChange}
-        onInput={(e) => checkForValid(e)}
-        value={value||""}
+        onChange={(e) => onInputChange(e)}
+        value={value || ""}
         type={inputType}
         minLength={minLength}
         maxLength={maxLength}
         placeholder={placeholder}
+        autoComplete="new-password"
+        disabled = {(isFormActive)? "" : "disabled"}
       />
       <span
         className={`log-reg-input__error-message ${
-          isValid ? "" : "log-reg-input__error-message-active"
+          validationResult.isValid ? "" : "log-reg-input__error-message-active"
         }`}
       >
-        {errorMessage}
+        {validationResult.errorMessage}
       </span>
     </div>
   );

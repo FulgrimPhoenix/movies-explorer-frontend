@@ -1,11 +1,10 @@
-import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import "../../vendor/fonts/fonts.css";
 import "../../vendor/normalize.css";
 import "./App.css";
 import React, { useEffect } from "react";
 
 import { Header } from "../Header/Header";
-import { Movies } from "../Movies/Movies.js";
 import { Main } from "../Main/Main";
 import { projectConstants } from "../../utils/constants";
 import { Footer } from "../Footer/Footer";
@@ -19,47 +18,99 @@ import { Page } from "../Page/Page.js";
 import { MenuPopup } from "../MenuPopup/MenuPopup.js";
 import { useUrlPathName } from "../../hooks/useUrlPathName.js";
 import { NotFoundPage } from "../NotFoundPage/NotFoundPage.js";
+import { api } from "../../utils/MainApi.js";
+import { ProtectedRoute } from "../ProtectedRoute/ProtectedRoute.js";
+import { moviesApi } from "../../utils/MoviesApi.js";
 
 function App() {
-  const [email, setEmail] = React.useState("");
-  const [logStatus, setLogStatus] = React.useState(true);
-  const [likedMovies, setLikedMovies] = React.useState([]);
+  const [isLoggedIn, setisLoggedIn] = React.useState(
+    JSON.parse(localStorage.getItem("isLoggedIn"))
+  );
   const [isMenuPopupOpen, setIsMenuPopupOpen] = React.useState(false);
+  const [userData, setUserData] = React.useState({});
+  const [moviesList, setMoviesList] = React.useState([]);
+  const [myMoviesList, setmyMoviesList] = React.useState([]);
+  const [searchResultAmongAllMovies, setSearchResultAmongAllMovies] =
+    React.useState(JSON.parse(localStorage.getItem("moviesList")) || "");
+  const [searchResultAmongMyMovies, setSearchResultAmongMyMovies] =
+    React.useState([]);
+  const [searchErrorResultText, setSearchErrorResultText] =
+    React.useState(projectConstants.messages.noOneMoviesSaved);
   const isProfilePage = useUrlPathName() === "/profile";
+  const navigate = useNavigate();
 
-  const navigate =useNavigate();
+  useEffect(() => {
+    Promise.all([
+      api.getMyUserInfo(),
+      moviesApi.getMoviesList(),
+      api.getMyMovieList(),
+    ])
+      .then(([myData, moviesList, myMoviesList]) => {
+        setUserData(myData);
+        setMoviesList(moviesList);
+        setSearchResultAmongAllMovies(
+          JSON.parse(localStorage.getItem("moviesList")) || moviesList
+        );
+        setmyMoviesList(myMoviesList);
+        setSearchResultAmongMyMovies(myMoviesList);
+        setisLoggedIn(true);
+        localStorage.setItem("isLoggedIn", JSON.stringify(true));
+      })
+      .catch((err) => {
+        setSearchErrorResultText(
+          projectConstants.messages.reqError
+        );
+        setisLoggedIn(false);
+        localStorage.setItem("isLoggedIn", JSON.stringify(false));
+        console.log(err);
+      });
+  }, [isLoggedIn]);
 
-  function logOut(){
-    setLogStatus(false);
-    navigate("/signin", { replace: true });
+  function handleSetIsLoggedIn() {
+    setisLoggedIn(!isLoggedIn);
   }
 
-  function goBack(){
-    navigate("../", {replace: false})
+  function signOut() {
+    setisLoggedIn(false);
   }
 
-  function handleTogglePopup(){
+  function resetSearch() {
+    setSearchResultAmongAllMovies(moviesList);
+    setSearchResultAmongMyMovies(myMoviesList);
+  }
+
+  function updateMyMoviesList(newList) {
+    setmyMoviesList(newList)
+    setSearchResultAmongMyMovies(newList);
+  }
+
+  function goBack() {
+    navigate(-1, { replace: false });
+  }
+
+  function handleTogglePopup() {
     setIsMenuPopupOpen(!isMenuPopupOpen);
   }
 
-  function changeEmail(e) {
-    setEmail(e.target.value);
-    console.log(email);
-  }
-
   return (
-    <CurrentUserContext.Provider
-      value={{ profileName: "Dick", profileEmail: "test@mail.ru" }}
-    >
+    <CurrentUserContext.Provider value={userData}>
       <div className="page">
         <Routes>
           <Route
             path="/"
             element={
               <>
-                <Header togglePopup={handleTogglePopup} headerData={projectConstants.headerData} isLoggedIn={logStatus} />
+                <Header
+                  togglePopup={handleTogglePopup}
+                  headerData={projectConstants.headerData}
+                  isLoggedIn={isLoggedIn}
+                />
                 <Page />
-                {isProfilePage ? "" : <Footer footerData={projectConstants.footerData} />}
+                {isProfilePage ? (
+                  ""
+                ) : (
+                  <Footer footerData={projectConstants.footerData} />
+                )}
               </>
             }
           >
@@ -68,45 +119,105 @@ function App() {
               element={<Main projectConstants={projectConstants} />}
             />
             <Route
-              path="movies"
+              path="/"
               element={
-                <>
-                  <SearchForm
-                    formSearchUtils={projectConstants.formSearchUtils}
-                  />
-                  <MovieCardList
-                    cardCellData={projectConstants.moviesData.staticData}
-                    movieList={projectConstants.moviesData.movieList}
-                  />
-                </>
+                <ProtectedRoute isLoggedIn={isLoggedIn} redirectPath="/" />
               }
-            />
-            <Route
-              path="saved-movies"
-              element={
-                <SearchForm
-                  formSearchUtils={projectConstants.formSearchUtils}
-                />
-              }
-            />
-            <Route
-              path="/profile"
-              element={<Profile profileData={projectConstants.profileData} logOut={logOut} />}
-            />
+            >
+              <Route
+                path="movies"
+                element={
+                  <>
+                    <SearchForm
+                      formSearchUtils={projectConstants.formSearchUtils}
+                      moviesList={moviesList}
+                      setCurrentMoviesList={setSearchResultAmongAllMovies}
+                      name={"searchBar"}
+                      setSearchErrorResultText={setSearchErrorResultText}
+                    />
+                    <MovieCardList
+                      moviesList={searchResultAmongAllMovies}
+                      myMoviesList={myMoviesList}
+                      setmyMoviesList={updateMyMoviesList}
+                      searchErrorResultText={searchErrorResultText}
+                    />
+                  </>
+                }
+              />
+              <Route
+                path="saved-movies"
+                element={
+                  <>
+                    <SearchForm
+                      formSearchUtils={projectConstants.formSearchUtils}
+                      moviesList={myMoviesList}
+                      setCurrentMoviesList={setSearchResultAmongMyMovies}
+                      name={"savedMoviesSearchBar"}
+                      setSearchErrorResultText={setSearchErrorResultText}
+                    />
+                    <MovieCardList
+                      moviesList={searchResultAmongMyMovies}
+                      myMoviesList={searchResultAmongMyMovies}
+                      setmyMoviesList={updateMyMoviesList}
+                      searchErrorResultText={searchErrorResultText}
+                    />
+                  </>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <Profile
+                    signOut={signOut}
+                    profileData={projectConstants.profileData}
+                    handleSetIsLoggedIn={handleSetIsLoggedIn}
+                    setUserData={setUserData}
+                    resetSearch={resetSearch}
+                  />
+                }
+              />
+            </Route>
           </Route>
           <Route
-            path="/signin"
-            element={<Login loginFormData={projectConstants.loginFormData} />}
-          ></Route>
-          <Route
-            path="/signup"
+            path="/"
             element={
-              <Register registerFormData={projectConstants.registerFormData} />
+              <ProtectedRoute isLoggedIn={!isLoggedIn} redirectPath="/" />
             }
-          ></Route>
-            <Route path="*" element={<NotFoundPage goBack={goBack} notFoundPageData={projectConstants.notFoundPageData} />}/>
+          >
+            <Route
+              path="/signin"
+              element={
+                <Login
+                  loginFormData={projectConstants.loginFormData}
+                  handleSetIsLoggedIn={handleSetIsLoggedIn}
+                />
+              }
+            ></Route>
+            <Route
+              path="/signup"
+              element={
+                <Register
+                  registerFormData={projectConstants.registerFormData}
+                  handleSetIsLoggedIn={handleSetIsLoggedIn}
+                />
+              }
+            ></Route>
+          </Route>
+          <Route
+            path="*"
+            element={
+              <NotFoundPage
+                goBack={goBack}
+                notFoundPageData={projectConstants.notFoundPageData}
+              />
+            }
+          />
         </Routes>
-        <MenuPopup togglePopup={handleTogglePopup} popupStatus={isMenuPopupOpen} popupData={projectConstants.popupData}/>
+        <MenuPopup
+          togglePopup={handleTogglePopup}
+          popupStatus={isMenuPopupOpen}
+          popupData={projectConstants.popupData}
+        />
       </div>
     </CurrentUserContext.Provider>
   );

@@ -9,24 +9,24 @@ export function Main({ projectConstants }) {
     <section className="main">
       <div className="intro">
         <h1 className="intro__title">
-          Учебный проект студента факультета Веб-разработки.
+          {projectConstants.mainData.title}
         </h1>
       </div>
       <div className="menu">
         <ul className="menu__list">
           <li className="menu__list-item">
             <a href="#about-project" className="menu__list-link">
-              О проекте
+              {projectConstants.mainData.aboutProjectSubtitle}
             </a>
           </li>
           <li className="menu__list-item">
             <a href="#techs" className="menu__list-link">
-              Технологии
+              {projectConstants.mainData.techsSubtitle}
             </a>
           </li>
           <li className="menu__list-item">
             <a href="#about-me" className="menu__list-link">
-              Студент
+              {projectConstants.mainData.aboutMeSubtitle}
             </a>
           </li>
         </ul>

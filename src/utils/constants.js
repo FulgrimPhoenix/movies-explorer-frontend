@@ -6,14 +6,7 @@ import accauntImgPink from "../images/headerLogo.svg";
 import accauntImg from "../images/headerLogoForAll.svg";
 import navBarIcon from "../images/menuNavBarIcon.svg";
 import exitButton from "../images/exit.svg";
-//HQ picture
-import slova_o_disaineHQ from "../images/movieList/33_slova_o_disaine.png";
-import kinoalmanaxHQ from "../images/movieList/Kinoalmanax.png";
-import v_pogone_za_BenksiHQ from "../images/movieList/V_pogone_za_Benksi.png";
-//LQ picture
-import slova_o_disaineLQ from "../images/movieList/33_slova_o_disaine.jpg";
-import kinoalmanaxLQ from "../images/movieList/Kinoalmanax.jpg";
-import v_pogone_za_BenksiLQ from "../images/movieList/V_pogone_za_Benksi.jpg";
+import deleteButton from "../images/deleteButton.svg";
 
 export const projectConstants = {
   headerData: {
@@ -21,6 +14,17 @@ export const projectConstants = {
     accauntImg: accauntImg,
     logo: logo,
     navBarIcon: navBarIcon,
+    registerButton: "Регистация",
+    signInButton: "Войти",
+    moviesButton: "Фильмы",
+    savedMoviesButton: "Сохраненные фильмы",
+    profileButton: "Аккаунт",
+  },
+  mainData: {
+    title: "Учебный проект студента факультета Веб-разработки.",
+    aboutProjectSubtitle: "О проекте",
+    techsSubtitle: "Технологии",
+    aboutMeSubtitle: "Студент",
   },
   aboutProjectData: [
     {
@@ -34,6 +38,13 @@ export const projectConstants = {
         "У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать, чтобы успешно защититься.",
     },
   ],
+  aboutProjectTimelineData: {
+    sectionTitle: "О проекте",
+    firstTimeline: "1 неделя",
+    firstTimelineText: "Back-end",
+    secondTimeline: "4 недели",
+    secondTimelineText: "Front-end",
+  },
   techsData: {
     title: "7 технологий",
     description:
@@ -81,47 +92,10 @@ export const projectConstants = {
     checkbox_title: "Короткометражки",
   },
   moviesData: {
-    movieList: [
-      {
-        imgSrcHQ: slova_o_disaineHQ,
-        imgSrc: slova_o_disaineLQ,
-        title: "33 слова о дизайне",
-        duration: "1ч 17м",
-      },
-      {
-        imgSrcHQ: kinoalmanaxHQ,
-        imgSrc: kinoalmanaxLQ,
-        title: "Киноальманах «100 лет дизайна»",
-        duration: "1ч 17м",
-      },
-      {
-        imgSrcHQ: v_pogone_za_BenksiHQ,
-        imgSrc: v_pogone_za_BenksiLQ,
-        title: "В погоне за Бенкси",
-        duration: "1ч 17м",
-      },
-      {
-        imgSrcHQ: slova_o_disaineHQ,
-        imgSrc: slova_o_disaineLQ,
-        title: "33 слова о дизайне1",
-        duration: "1ч 17м",
-      },
-      {
-        imgSrcHQ: kinoalmanaxHQ,
-        imgSrc: kinoalmanaxLQ,
-        title: "Киноальманах «100 лет дизайна»1",
-        duration: "1ч 17м",
-      },
-      {
-        imgSrcHQ: v_pogone_za_BenksiHQ,
-        imgSrc: v_pogone_za_BenksiLQ,
-        title: "В погоне за Бенкси1",
-        duration: "1ч 17м",
-      },
-    ],
     staticData: {
       saveButtonText: "Сохранить",
       savedImg: savedImg,
+      deleteIcon: deleteButton,
     },
   },
   registerFormData: {
@@ -144,6 +118,9 @@ export const projectConstants = {
     title: (name) => {
       return `Привет, ${name}!`;
     },
+    editButtonText: "Редактировать",
+    exitButtonText: "Выйти из аккаунта",
+    saveButtonText: "Сохранить"
   },
   popupData: {
     exitButton: exitButton,
@@ -153,5 +130,13 @@ export const projectConstants = {
     title: "404",
     subTitle: "Страница не найдена",
     buttonText: "Назад",
+  },
+  messages: {
+    noOneMoviesFinded: "По вашему запросу ничего не найдено",
+    noOneMoviesSaved: "Вы не сохранили ни одного фильма",
+    reqError:
+      "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз",
+    profileDataWasUpdated: "Данные успешно обновлены",
+    profileDataUpdateError: "Произошла ошибка:"
   },
 };

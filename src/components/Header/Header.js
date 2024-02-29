@@ -1,18 +1,11 @@
 import "./Header.css";
 import { Link, NavLink } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
 import { useUrlPathName } from "../../hooks/useUrlPathName";
 import { useWindowSize } from "../../hooks/useWindowSize";
 
 export function Header({ togglePopup, headerData, isLoggedIn }) {
   const setActive = ({ isActive }, baseStyle) =>
     isActive ? `${baseStyle} header__link_active` : `${baseStyle}`;
-
-  const [isMenuOpen, setIsMenuOpen] = useState("false");
-
-  function toggleMenu() {
-    setIsMenuOpen(!isMenuOpen);
-  }
 
   const isMainPage = useUrlPathName() === "/";
   const windowWidth = useWindowSize();
@@ -26,13 +19,13 @@ export function Header({ togglePopup, headerData, isLoggedIn }) {
         {windowWidth < 769 ? (
           isLoggedIn ? (
             <button onClick={togglePopup} className="header__menu-switcher">
-              <img src={headerData.navBarIcon} alt="Иконка навигации" />
+              <img src={headerData.navBarIcon} alt="Кнопка меню навигации" />
             </button>
           ) : (
             <ul className="header__menu-list">
               <li className="header__menu-item">
                 <Link className="header__link" to="signup">
-                  Регистрация
+                  {headerData.registerButton}
                 </Link>
               </li>
               <li className="header__menu-item header__menu-item_dark-theme">
@@ -40,7 +33,7 @@ export function Header({ togglePopup, headerData, isLoggedIn }) {
                   className="header__link header__link_dark-theme"
                   to="signin"
                 >
-                  Войти
+                  {headerData.signInButton}
                 </Link>
               </li>
             </ul>
@@ -58,7 +51,7 @@ export function Header({ togglePopup, headerData, isLoggedIn }) {
                         }
                         to="/movies"
                       >
-                        Фильмы
+                        {headerData.moviesButton}
                       </NavLink>
                     </li>
                     <li className="header__menu-nav-item">
@@ -68,7 +61,7 @@ export function Header({ togglePopup, headerData, isLoggedIn }) {
                         }
                         to="saved-movies"
                       >
-                        Сохраненные фильмы
+                        {headerData.savedMoviesButton}
                       </NavLink>
                     </li>
                     <li className="header__profile-cell">
@@ -78,19 +71,18 @@ export function Header({ togglePopup, headerData, isLoggedIn }) {
                         }
                         to="profile"
                       >
-                        Аккаунт
+                        {headerData.profileButton}
                       </NavLink>
                       <div
-                        className={`header__accaunt-img-container ${
-                          isMainPage ? "" : "header__accaunt-img-container_lite"
-                        }`}
+                        className={`header__accaunt-img-container ${isMainPage ? "" : "header__accaunt-img-container_lite"
+                          }`}
                       >
                         <picture className="header__accaunt-img">
                           <img
                             src={
                               isMainPage
                                 ? headerData.accauntImgPink
-                                : headerData.legacyAccauntImg
+                                : headerData.accauntImg
                             }
                             alt="логотип"
                           />
@@ -102,7 +94,7 @@ export function Header({ togglePopup, headerData, isLoggedIn }) {
                   <>
                     <li className="header__menu-item">
                       <Link className="header__link" to="signup">
-                        Регистрация
+                        {headerData.registerButton}
                       </Link>
                     </li>
                     <li className="header__menu-item header__menu-item_dark-theme">
@@ -110,7 +102,7 @@ export function Header({ togglePopup, headerData, isLoggedIn }) {
                         className="header__link header__link_dark-theme"
                         to="signin"
                       >
-                        Войти
+                        {headerData.signInButton}
                       </Link>
                     </li>
                   </>

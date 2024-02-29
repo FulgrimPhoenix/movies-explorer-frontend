@@ -1,21 +1,86 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LogRegForm } from "../LogRegForm/LogRegForm";
 import { LogRegInput } from "../LogRegInput/LogRegInput";
 import { projectConstants } from "../../utils/constants";
 import "./Register.css";
 import { useForm } from "../../hooks/useForm";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useUrlPathName } from "../../hooks/useUrlPathName";
+import { api } from "../../utils/MainApi";
 
-export function Register({ registerFormData }) {
+export function Register({ registerFormData, handleSetIsLoggedIn }) {
   const { values, onChange, setValues } = useForm([]);
+  const [isValid, setIsValid] = useState({
+    name: false,
+    email: false,
+    password: false,
+  });
+  const [isButtonActive, setIsButtonActive] = useState(false);
+  const [isFormActive, setIsFormActive] = useState(true);
+  const [serverError, setServerError] = useState("");
+  const currentPath = useUrlPathName();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    setValues([]);
+    setValues({});
+    setIsValid({ name: false, email: false, password: false });
+    setIsButtonActive(false);
   }, []);
+
+  useEffect(() => {
+    if (Object.values(isValid).every((item) => item)) {
+      setIsButtonActive(true);
+    } else {
+      setIsButtonActive(false);
+    }
+  }, [isValid, currentPath]);
+
+  function validateForm(name, value) {
+    setIsValid({ ...isValid, [name]: value });
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setIsFormActive(false);
+    api
+      .signup(values)
+      .then((res) => {
+        setIsFormActive(true);
+        if (res.status === 201) {
+          setServerError("");
+          api
+            .signin(values)
+            .then(() => {
+              handleSetIsLoggedIn();
+              navigate("/movies", { replace: true });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else if (res.status === 400) {
+          throw new Error("Данные введены не верно");
+        } else if (res.status === 409) {
+          throw new Error("Пользователь с таким email уже существует");
+        } else {
+          throw new Error("Ошибка на сервере");
+        }
+      })
+      .catch((err) => {
+        setIsFormActive(true);
+        setServerError(err.message);
+      });
+  }
 
   return (
     <main className="register">
-      <LogRegForm formData={projectConstants.registerFormData}>
+      <LogRegForm
+        formData={projectConstants.registerFormData}
+        isButtonActive={isButtonActive}
+        redirectLink={"/movies"}
+        onSubmit={handleSubmit}
+        serverErrorMessage={serverError}
+        isFormActive={isFormActive}
+      >
         <LogRegInput
           name="name"
           value={values["name"]}
@@ -24,7 +89,11 @@ export function Register({ registerFormData }) {
           inputType="text"
           minLength={2}
           maxLength={30}
+          validateForm={validateForm}
           placeholder={"Илья"}
+          regax={/[^a-zа-я\sё-]/gi}
+          advancedValidation={true}
+          isFormActive={isFormActive}
         />
         <LogRegInput
           name="email"
@@ -34,7 +103,13 @@ export function Register({ registerFormData }) {
           inputType="email"
           minLength={10}
           maxLength={30}
+          validateForm={validateForm}
           placeholder={"test@mail.ru"}
+          regax={
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i
+          }
+          advancedValidation={true}
+          isFormActive={isFormActive}
         />
         <LogRegInput
           name="password"
@@ -44,7 +119,11 @@ export function Register({ registerFormData }) {
           inputType="password"
           minLength={8}
           maxLength={16}
+          validateForm={validateForm}
           placeholder={"Strong8Password!"}
+          regax={null}
+          advancedValidation={false}
+          isFormActive={isFormActive}
         />
       </LogRegForm>
       <p className="register__redirect-line">
